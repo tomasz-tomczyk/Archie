@@ -1,4 +1,7 @@
 defmodule Archie.Contacts.Contact do
+  @moduledoc """
+  A contact. The main model in the application.
+  """
   use Archie.Schema
   alias Archie.Contacts.Email
   alias Archie.Contacts.PhoneNumber
@@ -36,20 +39,22 @@ defmodule Archie.Contacts.Contact do
   """
   def reject_empty_nested(attrs) do
     attrs
-    |> Map.update!("emails_drop", fn emails_drop ->
+    |> Map.update("emails_drop", [""], fn emails_drop ->
       emails_drop ++ find_empty_nested(Map.get(attrs, "emails"))
     end)
-    |> Map.update!("phone_numbers_drop", fn phone_numbers_drop ->
+    |> Map.update("phone_numbers_drop", [""], fn phone_numbers_drop ->
       phone_numbers_drop ++ find_empty_nested(Map.get(attrs, "phone_numbers"))
     end)
   end
+
+  defp find_empty_nested(nil), do: []
 
   defp find_empty_nested(map) do
     Enum.map(map, fn {key, value} ->
       case value do
         %{"value" => nil} -> key
         %{"value" => ""} -> key
-        _ -> false
+        _other -> false
       end
     end)
     |> Enum.reject(&(&1 == false))

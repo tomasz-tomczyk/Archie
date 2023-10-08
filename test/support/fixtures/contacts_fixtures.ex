@@ -11,11 +11,11 @@ defmodule Archie.ContactsFixtures do
     {:ok, contact} =
       attrs
       |> Enum.into(%{
-        dob: ~D[2023-10-07],
-        emails: %{},
-        first_name: "some first_name",
-        last_name: "some last_name",
-        phone_numbers: %{}
+        "dob" => ~D[2023-10-07],
+        "emails" => %{},
+        "first_name" => "some first_name",
+        "last_name" => "some last_name",
+        "phone_numbers" => %{}
       })
       |> Archie.Contacts.create_contact()
 

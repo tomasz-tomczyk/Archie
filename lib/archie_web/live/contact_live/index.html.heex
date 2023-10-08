@@ -2,7 +2,12 @@
   Listing Contacts
   <:actions>
     <.link patch={~p"/contacts/new"}>
-      <.button>New Contact</.button>
+      <button
+        type="button"
+        class="relative inline-flex items-center gap-x-1.5 rounded-md bg-green-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500"
+      >
+        <.icon name="hero-user-plus" class="-ml-0.5 h-5 w-5" /> New Contact
+      </button>
     </.link>
   </:actions>
 </.header>

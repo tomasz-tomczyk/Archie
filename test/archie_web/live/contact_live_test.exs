@@ -1,14 +1,22 @@
 defmodule ArchieWeb.ContactLiveTest do
-  use ArchieWeb.ConnCase
+  use ArchieWeb.ConnCase, async: true
 
   import Phoenix.LiveViewTest
   import Archie.ContactsFixtures
 
-  @create_attrs %{dob: "2023-10-07", emails: %{}, first_name: "some first_name", last_name: "some last_name", phone_numbers: %{}}
-  @update_attrs %{dob: "2023-10-08", emails: %{}, first_name: "some updated first_name", last_name: "some updated last_name", phone_numbers: %{}}
-  @invalid_attrs %{dob: nil, emails: nil, first_name: nil, last_name: nil, phone_numbers: nil}
+  @create_attrs %{
+    dob: "2023-10-07",
+    first_name: "some first_name",
+    last_name: "some last_name"
+  }
+  @update_attrs %{
+    dob: "2023-10-08",
+    first_name: "some updated first_name",
+    last_name: "some updated last_name"
+  }
+  @invalid_attrs %{dob: nil, first_name: nil, last_name: nil}
 
-  defp create_contact(_) do
+  defp create_contact(_ctx) do
     contact = contact_fixture()
     %{contact: contact}
   end
@@ -26,7 +34,7 @@ defmodule ArchieWeb.ContactLiveTest do
     test "saves new contact", %{conn: conn} do
       {:ok, index_live, _html} = live(conn, ~p"/contacts")
 
-      assert index_live |> element("a", "New Contact") |> render_click() =~
+      assert index_live |> element("header a", "New Contact") |> render_click() =~
                "New Contact"
 
       assert_patch(index_live, ~p"/contacts/new")
@@ -83,15 +91,15 @@ defmodule ArchieWeb.ContactLiveTest do
     test "displays contact", %{conn: conn, contact: contact} do
       {:ok, _show_live, html} = live(conn, ~p"/contacts/#{contact}")
 
-      assert html =~ "Show Contact"
       assert html =~ contact.first_name
+      assert html =~ contact.last_name
     end
 
     test "updates contact within modal", %{conn: conn, contact: contact} do
       {:ok, show_live, _html} = live(conn, ~p"/contacts/#{contact}")
 
       assert show_live |> element("a", "Edit") |> render_click() =~
-               "Edit Contact"
+               "some first_name"
 
       assert_patch(show_live, ~p"/contacts/#{contact}/show/edit")
 

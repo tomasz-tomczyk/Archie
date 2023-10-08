@@ -3,7 +3,7 @@ defmodule ArchieWeb.ContactLive.FormComponent do
 
   alias Archie.Contacts
 
-  @impl true
+  @impl Phoenix.LiveComponent
   def render(assigns) do
     ~H"""
     <div>
@@ -94,7 +94,7 @@ defmodule ArchieWeb.ContactLive.FormComponent do
     """
   end
 
-  @impl true
+  @impl Phoenix.LiveComponent
   def update(%{contact: contact} = assigns, socket) do
     changeset = Contacts.change_contact(contact)
 
@@ -104,7 +104,7 @@ defmodule ArchieWeb.ContactLive.FormComponent do
      |> assign_form(changeset)}
   end
 
-  @impl true
+  @impl Phoenix.LiveComponent
   def handle_event("validate", %{"contact" => contact_params}, socket) do
     changeset =
       socket.assigns.contact

@@ -1,4 +1,7 @@
 defmodule Archie.Contacts.Email do
+  @moduledoc """
+  An email address embedded in a contact.
+  """
   use Archie.Schema
 
   embedded_schema do

@@ -1,5 +1,5 @@
 defmodule Archie.ContactsTest do
-  use Archie.DataCase
+  use Archie.DataCase, async: true
 
   alias Archie.Contacts
 
@@ -8,7 +8,13 @@ defmodule Archie.ContactsTest do
 
     import Archie.ContactsFixtures
 
-    @invalid_attrs %{dob: nil, emails: nil, first_name: nil, last_name: nil, phone_numbers: nil}
+    @invalid_attrs %{
+      "dob" => nil,
+      "emails" => nil,
+      "first_name" => nil,
+      "last_name" => nil,
+      "phone_numbers" => nil
+    }
 
     test "list_contacts/0 returns all contacts" do
       contact = contact_fixture()
@@ -21,14 +27,18 @@ defmodule Archie.ContactsTest do
     end
 
     test "create_contact/1 with valid data creates a contact" do
-      valid_attrs = %{dob: ~D[2023-10-07], emails: %{}, first_name: "some first_name", last_name: "some last_name", phone_numbers: %{}}
+      valid_attrs = %{
+        "dob" => ~D[2023-10-07],
+        "first_name" => "some first_name",
+        "last_name" => "some last_name"
+      }
 
       assert {:ok, %Contact{} = contact} = Contacts.create_contact(valid_attrs)
       assert contact.dob == ~D[2023-10-07]
-      assert contact.emails == %{}
+      assert contact.emails == []
       assert contact.first_name == "some first_name"
       assert contact.last_name == "some last_name"
-      assert contact.phone_numbers == %{}
+      assert contact.phone_numbers == []
     end
 
     test "create_contact/1 with invalid data returns error changeset" do
@@ -37,14 +47,21 @@ defmodule Archie.ContactsTest do
 
     test "update_contact/2 with valid data updates the contact" do
       contact = contact_fixture()
-      update_attrs = %{dob: ~D[2023-10-08], emails: %{}, first_name: "some updated first_name", last_name: "some updated last_name", phone_numbers: %{}}
+
+      update_attrs = %{
+        "dob" => ~D[2023-10-08],
+        "emails" => %{},
+        "first_name" => "some updated first_name",
+        "last_name" => "some updated last_name",
+        "phone_numbers" => %{}
+      }
 
       assert {:ok, %Contact{} = contact} = Contacts.update_contact(contact, update_attrs)
       assert contact.dob == ~D[2023-10-08]
-      assert contact.emails == %{}
+      assert contact.emails == []
       assert contact.first_name == "some updated first_name"
       assert contact.last_name == "some updated last_name"
-      assert contact.phone_numbers == %{}
+      assert contact.phone_numbers == []
     end
 
     test "update_contact/2 with invalid data returns error changeset" do

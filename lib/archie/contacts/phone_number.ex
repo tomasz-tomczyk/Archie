@@ -1,4 +1,7 @@
 defmodule Archie.Contacts.PhoneNumber do
+  @moduledoc """
+  A phone number embedded in a contact.
+  """
   use Archie.Schema
 
   embedded_schema do

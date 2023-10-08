@@ -16,8 +16,9 @@ defmodule ArchieWeb.CoreComponents do
   """
   use Phoenix.Component
 
-  alias Phoenix.LiveView.JS
   import ArchieWeb.Gettext
+  alias Phoenix.HTML.Form
+  alias Phoenix.LiveView.JS
 
   @doc """
   Renders a modal.
@@ -297,7 +298,7 @@ defmodule ArchieWeb.CoreComponents do
 
   def input(%{type: "checkbox", value: value} = assigns) do
     assigns =
-      assign_new(assigns, :checked, fn -> Phoenix.HTML.Form.normalize_value("checkbox", value) end)
+      assign_new(assigns, :checked, fn -> Form.normalize_value("checkbox", value) end)
 
     ~H"""
     <div phx-feedback-for={@name}>
@@ -413,6 +414,7 @@ defmodule ArchieWeb.CoreComponents do
   Renders a header with title.
   """
   attr :class, :string, default: nil
+  attr :skip_subtitle, :boolean, default: false
 
   slot :inner_block, required: true
   slot :subtitle
@@ -425,7 +427,7 @@ defmodule ArchieWeb.CoreComponents do
         <h1 class="text-lg font-semibold leading-8 text-zinc-800">
           <%= render_slot(@inner_block) %>
         </h1>
-        <p :if={@subtitle != []} class="mt-2 text-sm leading-6 text-zinc-600">
+        <p :if={!@skip_subtitle && @subtitle != []} class="mt-2 text-sm leading-6 text-zinc-600">
           <%= render_slot(@subtitle) %>
         </p>
       </div>

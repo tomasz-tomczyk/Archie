@@ -4,14 +4,17 @@ defmodule ArchieWeb.ContactLive.Index do
   alias Archie.Contacts
   alias Archie.Contacts.Contact
 
-  @impl true
+  @impl Phoenix.LiveView
   def mount(_params, _session, socket) do
     {:ok, stream(socket, :contacts, Contacts.list_contacts())}
   end
 
-  @impl true
+  @impl Phoenix.LiveView
   def handle_params(params, _url, socket) do
-    {:noreply, apply_action(socket, socket.assigns.live_action, params)}
+    {:noreply,
+     socket
+     |> assign(:path, "contacts")
+     |> apply_action(socket.assigns.live_action, params)}
   end
 
   defp apply_action(socket, :edit, %{"id" => id}) do
@@ -32,12 +35,12 @@ defmodule ArchieWeb.ContactLive.Index do
     |> assign(:contact, nil)
   end
 
-  @impl true
+  @impl Phoenix.LiveView
   def handle_info({ArchieWeb.ContactLive.FormComponent, {:saved, contact}}, socket) do
     {:noreply, stream_insert(socket, :contacts, contact)}
   end
 
-  @impl true
+  @impl Phoenix.LiveView
   def handle_event("delete", %{"id" => id}, socket) do
     contact = Contacts.get_contact!(id)
     {:ok, _} = Contacts.delete_contact(contact)
