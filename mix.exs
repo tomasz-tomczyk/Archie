@@ -5,7 +5,7 @@ defmodule Archie.MixProject do
     [
       app: :archie,
       version: "0.1.0",
-      elixir: "~> 1.14",
+      elixir: "~> 1.15.6",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
