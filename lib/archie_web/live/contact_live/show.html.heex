@@ -6,7 +6,7 @@
   </:subtitle>
   <:actions>
     <.link patch={~p"/contacts/#{@contact}/show/edit"} phx-click={JS.push_focus()}>
-      <.button>Edit contact</.button>
+      <.button><%= gettext("Edit contact") %></.button>
     </.link>
   </:actions>
 </.header>
@@ -14,20 +14,22 @@
 <div class="mt-14">
   <dl class="-my-4 divide-y divide-zinc-100">
     <div :for={email <- @contact.emails} class="flex gap-4 py-4 text-sm leading-6 sm:gap-8">
-      <dt class="w-1/4 flex-none text-zinc-500">Email (<%= email.label %>)</dt>
+      <dt class="w-1/4 flex-none text-zinc-500"><%= gettext("Email") %> (<%= email.label %>)</dt>
       <dd class="text-zinc-700"><%= email.value %></dd>
     </div>
     <div
       :for={phone_number <- @contact.phone_numbers}
       class="flex gap-4 py-4 text-sm leading-6 sm:gap-8"
     >
-      <dt class="w-1/4 flex-none text-zinc-500">Phone number (<%= phone_number.label %>)</dt>
+      <dt class="w-1/4 flex-none text-zinc-500">
+        <%= gettext("Phone number") %> (<%= phone_number.label %>)
+      </dt>
       <dd class="text-zinc-700"><%= phone_number.value %></dd>
     </div>
   </dl>
 </div>
 
-<.back navigate={~p"/contacts"}>Back to contacts</.back>
+<.back navigate={~p"/contacts"}><%= gettext("Back to contacts") %></.back>
 
 <.modal
   :if={@live_action == :edit}

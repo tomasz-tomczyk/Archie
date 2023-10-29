@@ -1,12 +1,12 @@
 <.header>
-  Listing Contacts
+  <%= gettext("List of your contacts") %>
   <:actions>
     <.link patch={~p"/contacts/new"}>
       <button
         type="button"
         class="relative inline-flex items-center gap-x-1.5 rounded-md bg-green-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500"
       >
-        <.icon name="hero-user-plus" class="-ml-0.5 h-5 w-5" /> New Contact
+        <.icon name="hero-user-plus" class="-ml-0.5 h-5 w-5" /> <%= gettext("New Contact") %>
       </button>
     </.link>
   </:actions>
@@ -17,21 +17,21 @@
   rows={@streams.contacts}
   row_click={fn {_id, contact} -> JS.navigate(~p"/contacts/#{contact}") end}
 >
-  <:col :let={{_id, contact}} label="First name"><%= contact.first_name %></:col>
-  <:col :let={{_id, contact}} label="Last name"><%= contact.last_name %></:col>
-  <:col :let={{_id, contact}} label="Date of Birth"><%= contact.dob %></:col>
+  <:col :let={{_id, contact}} label={gettext("First name")}><%= contact.first_name %></:col>
+  <:col :let={{_id, contact}} label={gettext("Last name")}><%= contact.last_name %></:col>
+  <:col :let={{_id, contact}} label={gettext("Date of Birth")}><%= contact.dob %></:col>
   <:action :let={{_id, contact}}>
     <div class="sr-only">
-      <.link navigate={~p"/contacts/#{contact}"}>Show</.link>
+      <.link navigate={~p"/contacts/#{contact}"}><%= gettext("Show") %></.link>
     </div>
-    <.link patch={~p"/contacts/#{contact}/edit"}>Edit</.link>
+    <.link patch={~p"/contacts/#{contact}/edit"}><%= gettext("Edit") %></.link>
   </:action>
   <:action :let={{id, contact}}>
     <.link
       phx-click={JS.push("delete", value: %{id: contact.id}) |> hide("##{id}")}
-      data-confirm="Are you sure?"
+      data-confirm={gettext("Are you sure?")}
     >
-      Delete
+      <%= gettext("Delete") %>
     </.link>
   </:action>
 </.table>

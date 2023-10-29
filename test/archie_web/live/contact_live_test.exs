@@ -27,7 +27,7 @@ defmodule ArchieWeb.ContactLiveTest do
     test "lists all contacts", %{conn: conn, contact: contact} do
       {:ok, _index_live, html} = live(conn, ~p"/contacts")
 
-      assert html =~ "Listing Contacts"
+      assert html =~ "List of your contacts"
       assert html =~ contact.first_name
     end
 

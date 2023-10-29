@@ -19,19 +19,19 @@ defmodule ArchieWeb.ContactLive.Index do
 
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
-    |> assign(:page_title, "Edit Contact")
+    |> assign(:page_title, gettext("Edit Contact"))
     |> assign(:contact, Contacts.get_contact!(id))
   end
 
   defp apply_action(socket, :new, _params) do
     socket
-    |> assign(:page_title, "New Contact")
+    |> assign(:page_title, gettext("New Contact"))
     |> assign(:contact, %Contact{})
   end
 
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "Listing Contacts")
+    |> assign(:page_title, gettext("Your contacts"))
     |> assign(:contact, nil)
   end
 

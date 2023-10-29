@@ -37,7 +37,11 @@ defmodule ArchieWeb.ContactLive.FormComponent do
           <.inputs_for :let={f_pn} field={@form[:phone_numbers]}>
             <div class="sm:col-span-2">
               <.input type="hidden" name="contact[phone_numbers_sort][]" value={f_pn.index} />
-              <.input field={f_pn[:label]} type="select" options={["mobile", "home"]} />
+              <.input
+                field={f_pn[:label]}
+                type="select"
+                options={Archie.Contacts.PhoneNumber.types()}
+              />
             </div>
             <div class="sm:col-span-3">
               <.input field={f_pn[:value]} type="text" />
@@ -65,7 +69,7 @@ defmodule ArchieWeb.ContactLive.FormComponent do
             type="button"
             class="inline-flex items-center gap-x-1.5 rounded-md bg-green-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
           >
-            <.icon name="hero-plus-circle" class="-ml-0.5 h-5 w-5" /> add phone
+            <.icon name="hero-plus-circle" class="-ml-0.5 h-5 w-5" /> <%= gettext("add phone number") %>
           </span>
         </label>
 
@@ -73,7 +77,7 @@ defmodule ArchieWeb.ContactLive.FormComponent do
           <.inputs_for :let={f_pn} field={@form[:emails]}>
             <div class="sm:col-span-2">
               <.input type="hidden" name="contact[emails_sort][]" value={f_pn.index} />
-              <.input field={f_pn[:label]} type="select" options={["personal", "work"]} />
+              <.input field={f_pn[:label]} type="select" options={Archie.Contacts.Email.types()} />
             </div>
             <div class="sm:col-span-3">
               <.input field={f_pn[:value]} type="text" />
@@ -96,12 +100,12 @@ defmodule ArchieWeb.ContactLive.FormComponent do
             type="button"
             class="inline-flex items-center gap-x-1.5 rounded-md bg-green-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
           >
-            <.icon name="hero-plus-circle" class="-ml-0.5 h-5 w-5" /> add email
+            <.icon name="hero-plus-circle" class="-ml-0.5 h-5 w-5" /> <%= gettext("add email") %>
           </span>
         </label>
 
         <:actions>
-          <.button phx-disable-with="Saving...">Save Contact</.button>
+          <.button phx-disable-with={gettext("Saving...")}><%= gettext("Save Contact") %></.button>
         </:actions>
       </.simple_form>
     </div>
@@ -139,7 +143,7 @@ defmodule ArchieWeb.ContactLive.FormComponent do
 
         {:noreply,
          socket
-         |> put_flash(:info, "Contact updated successfully")
+         |> put_flash(:info, gettext("Contact updated successfully"))
          |> push_patch(to: socket.assigns.patch)}
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -154,7 +158,7 @@ defmodule ArchieWeb.ContactLive.FormComponent do
 
         {:noreply,
          socket
-         |> put_flash(:info, "Contact created successfully")
+         |> put_flash(:info, gettext("Contact created successfully"))
          |> push_patch(to: socket.assigns.patch)}
 
       {:error, %Ecto.Changeset{} = changeset} ->
