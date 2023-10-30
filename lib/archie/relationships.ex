@@ -101,4 +101,27 @@ defmodule Archie.Relationships do
   def change_relationship(%Relationship{} = relationship, attrs \\ %{}) do
     Relationship.changeset(relationship, attrs)
   end
+
+  def all_relationships(contact) do
+    contact =
+      Repo.preload(contact,
+        source_relationships: [:related_contact],
+        related_relationships: [:source_contact]
+      )
+
+    source_relationships =
+      contact.source_relationships |> Enum.map(fn r -> %{r | contact: r.related_contact} end)
+
+    related_relationships =
+      contact.related_relationships
+      |> Enum.map(fn r ->
+        %{r | contact: r.source_contact, type: inverse_relationship(r.type)}
+      end)
+
+    source_relationships ++ related_relationships
+  end
+
+  defp inverse_relationship(:parent), do: :child
+  defp inverse_relationship(:child), do: :parent
+  defp inverse_relationship(type), do: type
 end

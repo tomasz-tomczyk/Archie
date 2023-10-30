@@ -11,6 +11,14 @@
 msgid ""
 msgstr ""
 
+msgid "Family"
+msgstr ""
+msgid "Friend"
+msgstr ""
+msgid "Spouse"
+msgstr ""
+
+
 #: lib/archie_web/components/core_components.ex:476
 #, elixir-autogen, elixir-format
 msgid "Actions"
@@ -77,3 +85,4 @@ msgstr ""
 #, elixir-autogen, elixir-format
 msgid "Show"
 msgstr ""
+

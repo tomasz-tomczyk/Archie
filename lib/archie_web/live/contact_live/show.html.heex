@@ -37,18 +37,24 @@
       <ul role="list" class="mt-2 divide-y divide-gray-200 border-b border-t border-gray-200">
         <%= for r <- @relationships do %>
           <li class="flex items-center justify-between py-3">
-            <div class="flex items-center">
-              <p class="ml-4 text-sm font-medium text-gray-900">
-                <%= Contact.display_name(r.contact) %>
-              </p>
-            </div>
+            <.link patch={~p"/contacts/#{r.contact}"}>
+              <div class="flex items-center">
+                <p class="text-sm font-medium text-gray-900">
+                  <.relation type={r.type} class="mr-1" />
+                  <%= Contact.display_name(r.contact) %>
+                </p>
+              </div>
+            </.link>
+
             <button
-              type="button"
-              class="ml-6 rounded-md bg-white text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               phx-click="delete_relationship"
               phx-value-id={r.id}
+              data-confirm="Are you sure?"
             >
-              Remove<span class="sr-only"> <%= Contact.display_name(r.contact) %></span>
+              <.icon
+                name="hero-trash"
+                class="w-4 h-4 relative text-gray-300 hover:text-amber-700"
+              />
             </button>
           </li>
         <% end %>

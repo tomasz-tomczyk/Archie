@@ -14,7 +14,7 @@ defmodule ArchieWeb.ContactLive.Show do
   @impl Phoenix.LiveView
   def handle_params(%{"id" => id}, _uri, socket) do
     contact = Contacts.get_contact!(id)
-    relationships = Contact.all_relationships(contact)
+    relationships = Relationships.all_relationships(contact)
 
     contact_options =
       Contacts.list_contacts() |> Enum.map(fn c -> {Contact.display_name(c), c.id} end)

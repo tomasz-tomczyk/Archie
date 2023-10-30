@@ -85,6 +85,7 @@ defmodule ArchieWeb do
       import Phoenix.HTML
       # Core UI components and translation
       import ArchieWeb.CoreComponents
+      import ArchieWeb.RelationshipComponents
       import ArchieWeb.Gettext
 
       # Shortcut for generating JS commands

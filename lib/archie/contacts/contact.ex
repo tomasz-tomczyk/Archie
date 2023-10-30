@@ -21,22 +21,6 @@ defmodule Archie.Contacts.Contact do
     timestamps()
   end
 
-  def all_relationships(contact) do
-    contact =
-      Repo.preload(contact,
-        source_relationships: [:related_contact],
-        related_relationships: [:source_contact]
-      )
-
-    source_relationships =
-      contact.source_relationships |> Enum.map(fn r -> %{r | contact: r.related_contact} end)
-
-    related_relationships =
-      contact.related_relationships |> Enum.map(fn r -> %{r | contact: r.source_contact} end)
-
-    source_relationships ++ related_relationships
-  end
-
   @doc false
   def changeset(contact, attrs) do
     contact
