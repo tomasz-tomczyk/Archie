@@ -11,13 +11,40 @@
 msgid ""
 msgstr ""
 
-msgid "Family"
-msgstr ""
-msgid "Friend"
-msgstr ""
+#: lib/archie/relationships/relationship.ex:31
+#, elixir-autogen
 msgid "Spouse"
 msgstr ""
 
+#: lib/archie/relationships/relationship.ex:32
+#, elixir-autogen
+msgid "Partner"
+msgstr ""
+
+#: lib/archie/relationships/relationship.ex:33
+#, elixir-autogen
+msgid "Sibling"
+msgstr ""
+
+#: lib/archie/relationships/relationship.ex:34
+#, elixir-autogen
+msgid "Child"
+msgstr ""
+
+#: lib/archie/relationships/relationship.ex:35
+#, elixir-autogen
+msgid "Cousin"
+msgstr ""
+
+#: lib/archie/relationships/relationship.ex:36
+#, elixir-autogen
+msgid "Parent"
+msgstr ""
+
+#: lib/archie/relationships/relationship.ex:37
+#, elixir-autogen
+msgid "Friend"
+msgstr ""
 
 #: lib/archie_web/components/core_components.ex:476
 #, elixir-autogen, elixir-format
@@ -86,3 +113,84 @@ msgstr ""
 msgid "Show"
 msgstr ""
 
+#: lib/archie_web/live/contact_live/show.html.heex:71
+#, elixir-autogen, elixir-format
+msgid "Add relationship"
+msgstr ""
+
+#: lib/archie_web/live/contact_live/show.html.heex:103
+#, elixir-autogen, elixir-format
+msgid "Back to contacts"
+msgstr ""
+
+#: lib/archie_web/live/contact_live/form_component.ex:161
+#, elixir-autogen, elixir-format
+msgid "Contact created successfully"
+msgstr ""
+
+#: lib/archie_web/live/contact_live/form_component.ex:146
+#, elixir-autogen, elixir-format
+msgid "Contact updated successfully"
+msgstr ""
+
+#: lib/archie_web/live/contact_live/show.ex:65
+#, elixir-autogen, elixir-format
+msgid "Could not delete the relationship"
+msgstr ""
+
+#: lib/archie_web/live/contact_live/show.html.heex:9
+#, elixir-autogen, elixir-format
+msgid "Edit contact"
+msgstr ""
+
+#: lib/archie_web/live/contact_live/show.html.heex:20
+#, elixir-autogen, elixir-format
+msgid "Email"
+msgstr ""
+
+#: lib/archie/contacts/email.ex:20
+#: lib/archie/contacts/phone_number.ex:20
+#, elixir-autogen, elixir-format
+msgid "Personal"
+msgstr ""
+
+#: lib/archie_web/live/contact_live/show.html.heex:29
+#, elixir-autogen, elixir-format
+msgid "Phone number"
+msgstr ""
+
+#: lib/archie_web/live/contact_live/show.ex:59
+#, elixir-autogen, elixir-format
+msgid "Relationship deleted"
+msgstr ""
+
+#: lib/archie_web/live/contact_live/show.ex:43
+#, elixir-autogen, elixir-format
+msgid "Relationship saved"
+msgstr ""
+
+#: lib/archie_web/live/contact_live/form_component.ex:108
+#, elixir-autogen, elixir-format
+msgid "Save Contact"
+msgstr ""
+
+#: lib/archie_web/live/contact_live/form_component.ex:108
+#, elixir-autogen, elixir-format
+msgid "Saving..."
+msgstr ""
+
+#: lib/archie/contacts/email.ex:21
+#: lib/archie/contacts/phone_number.ex:21
+#, elixir-autogen, elixir-format
+msgid "Work"
+msgstr ""
+
+#: lib/archie_web/live/contact_live/form_component.ex:103
+#, elixir-autogen, elixir-format
+msgid "add email"
+msgstr ""
+
+#: lib/archie_web/live/contact_live/form_component.ex:72
+#, elixir-autogen, elixir-format
+msgid "add phone number"
+msgstr ""
