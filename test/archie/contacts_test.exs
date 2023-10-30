@@ -1,5 +1,5 @@
 defmodule Archie.ContactsTest do
-  use Archie.DataCase, async: true
+  use Archie.DataCase, async: false
 
   alias Archie.Contacts
 

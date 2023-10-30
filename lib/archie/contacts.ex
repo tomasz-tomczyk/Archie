@@ -7,6 +7,7 @@ defmodule Archie.Contacts do
   alias Archie.Repo
 
   alias Archie.Contacts.Contact
+  alias Archie.Relationships
 
   @doc """
   Returns the list of contacts.
@@ -49,12 +50,22 @@ defmodule Archie.Contacts do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_contact(attrs \\ %{}) do
+  def create_contact(attrs \\ %{})
+
+  def create_contact(attrs) when is_map(attrs) do
     attrs = Contact.reject_empty_nested(attrs)
 
     %Contact{}
     |> Contact.changeset(attrs)
     |> Repo.insert()
+  end
+
+  def create_contact(name) when is_binary(name) do
+    String.split(name, " ", trim: true)
+    |> case do
+      [first_name, last_name] -> create_contact(%{first_name: first_name, last_name: last_name})
+      [name] -> create_contact(%{first_name: name})
+    end
   end
 
   @doc """
@@ -104,5 +115,41 @@ defmodule Archie.Contacts do
   """
   def change_contact(%Contact{} = contact, attrs \\ %{}) do
     Contact.changeset(contact, attrs)
+  end
+
+  def search(term) when term in ["", nil] do
+    Contact
+    |> Repo.all()
+  end
+
+  def search(term) do
+    from(c in Contact,
+      join:
+        fts in fragment("SELECT uuid FROM contacts_fts WHERE contacts_fts MATCH ?", ^"#{term}*"),
+      on: c.id == fts.uuid
+    )
+    |> Repo.all()
+  end
+
+  def search(term, excluded_contact_id) when term in ["", nil] do
+    Contact
+    |> exclude_related(excluded_contact_id)
+    |> Repo.all()
+  end
+
+  def search(term, excluded_contact_id) do
+    from(c in Contact,
+      join:
+        fts in fragment("SELECT uuid FROM contacts_fts WHERE contacts_fts MATCH ?", ^"#{term}*"),
+      on: c.id == fts.uuid
+    )
+    |> exclude_related(excluded_contact_id)
+    |> Repo.all()
+  end
+
+  defp exclude_related(query, contact_id) do
+    exclude_ids = [contact_id | Relationships.get_related_contact_ids(contact_id)]
+
+    from(c in query, where: c.id not in ^exclude_ids)
   end
 end

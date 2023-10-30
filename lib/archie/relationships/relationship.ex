@@ -8,7 +8,6 @@ defmodule Archie.Relationships.Relationship do
   @types ~w(spouse partner sibling child cousin parent friend)a
 
   schema "relationships" do
-    field :name, :string
     field(:type, Ecto.Enum, values: @types, default: :friend)
 
     belongs_to :source_contact, Archie.Contacts.Contact
@@ -22,8 +21,8 @@ defmodule Archie.Relationships.Relationship do
   @doc false
   def changeset(relationship, attrs) do
     relationship
-    |> cast(attrs, [:name, :type, :source_contact_id, :related_contact_id])
-    |> validate_required([:type, :source_contact_id])
+    |> cast(attrs, [:type, :source_contact_id, :related_contact_id])
+    |> validate_required([:type, :source_contact_id, :related_contact_id])
   end
 
   def types do

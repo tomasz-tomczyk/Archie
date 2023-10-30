@@ -142,4 +142,27 @@ defmodule Archie.Relationships do
        end)}
     end)
   end
+
+  @doc """
+  Returns the list of unique related contact ids.
+  """
+  def get_related_contact_ids(contact_id) do
+    source_ids_query =
+      from r in Relationship,
+        where: r.source_contact_id == ^contact_id,
+        select: r.related_contact_id
+
+    related_ids_query =
+      from r in Relationship,
+        where: r.related_contact_id == ^contact_id,
+        select: r.source_contact_id
+
+    union_query =
+      from r in subquery(source_ids_query),
+        union_all: ^related_ids_query,
+        select: r.related_contact_id
+
+    Repo.all(union_query)
+    |> Enum.uniq()
+  end
 end

@@ -4,14 +4,13 @@ defmodule Archie.Repo.Migrations.CreateRelationships do
   def change do
     create table(:relationships, primary_key: false) do
       add :id, :binary_id, primary_key: true
-      add :name, :string
       add :type, :string
 
       add :source_contact_id,
-          references(:contacts, on_delete: :delete_all, type: :binary_id, null: false)
+          references(:contacts, on_delete: :delete_all, type: :binary_id)
 
       add :related_contact_id,
-          references(:contacts, on_delete: :delete_all, type: :binary_id, null: true)
+          references(:contacts, on_delete: :delete_all, type: :binary_id)
 
       timestamps()
     end

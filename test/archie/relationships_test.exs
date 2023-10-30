@@ -1,5 +1,5 @@
 defmodule Archie.RelationshipsTest do
-  use Archie.DataCase, async: true
+  use Archie.DataCase, async: false
 
   alias Archie.Relationships
 
@@ -9,7 +9,7 @@ defmodule Archie.RelationshipsTest do
     import Archie.RelationshipsFixtures
     import Archie.ContactsFixtures
 
-    @invalid_attrs %{name: nil, type: nil}
+    @invalid_attrs %{type: nil}
 
     test "list_relationships/0 returns all relationships" do
       relationship = relationship_fixture()
@@ -22,13 +22,18 @@ defmodule Archie.RelationshipsTest do
     end
 
     test "create_relationship/1 with valid data creates a relationship" do
-      contact = contact_fixture()
-      valid_attrs = %{name: "some name", type: :friend, source_contact_id: contact.id}
+      source_contact = contact_fixture()
+      related_contact = contact_fixture()
+
+      valid_attrs = %{
+        type: :friend,
+        source_contact_id: source_contact.id,
+        related_contact_id: related_contact.id
+      }
 
       assert {:ok, %Relationship{} = relationship} =
                Relationships.create_relationship(valid_attrs)
 
-      assert relationship.name == "some name"
       assert relationship.type == :friend
     end
 
@@ -38,12 +43,11 @@ defmodule Archie.RelationshipsTest do
 
     test "update_relationship/2 with valid data updates the relationship" do
       relationship = relationship_fixture()
-      update_attrs = %{name: "some updated name", type: :spouse}
+      update_attrs = %{type: :spouse}
 
       assert {:ok, %Relationship{} = relationship} =
                Relationships.update_relationship(relationship, update_attrs)
 
-      assert relationship.name == "some updated name"
       assert relationship.type == :spouse
     end
 

@@ -43,6 +43,7 @@ defmodule Archie.Contacts.Contact do
   """
   def reject_empty_nested(attrs) do
     attrs
+    |> Utils.map_string_keys()
     |> Map.update("emails_drop", [""], fn emails_drop ->
       emails_drop ++ find_empty_nested(Map.get(attrs, "emails"))
     end)
@@ -69,4 +70,6 @@ defmodule Archie.Contacts.Contact do
     |> Enum.reject(&is_nil/1)
     |> Enum.join(" ")
   end
+
+  def display_name(_contact), do: ""
 end

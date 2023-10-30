@@ -11,13 +11,15 @@ defmodule Archie.RelationshipsFixtures do
   """
   def relationship_fixture(attrs \\ %{}) do
     source_contact = attrs[:source_contact] || contact_fixture()
+    related_contact = attrs[:related_contact] || contact_fixture()
 
     {:ok, relationship} =
       attrs
       |> Enum.into(%{
         name: "some name",
         type: :friend,
-        source_contact_id: source_contact.id
+        source_contact_id: source_contact.id,
+        related_contact_id: related_contact.id
       })
       |> Archie.Relationships.create_relationship()
 
