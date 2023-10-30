@@ -6,7 +6,7 @@ import Config
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
 config :archie, Archie.Repo,
-  database: Path.expand("../archie_test.db", Path.dirname(__ENV__.file)),
+  database: Path.expand("../data/archie_test.db", Path.dirname(__ENV__.file)),
   pool_size: 5,
   pool: Ecto.Adapters.SQL.Sandbox
 
