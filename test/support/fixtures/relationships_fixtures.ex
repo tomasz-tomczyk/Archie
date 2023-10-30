@@ -16,7 +16,7 @@ defmodule Archie.RelationshipsFixtures do
       attrs
       |> Enum.into(%{
         name: "some name",
-        type: "some type",
+        type: :friend,
         source_contact_id: source_contact.id
       })
       |> Archie.Relationships.create_relationship()

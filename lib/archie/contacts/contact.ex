@@ -5,6 +5,7 @@ defmodule Archie.Contacts.Contact do
   use Archie.Schema
   alias Archie.Contacts.Email
   alias Archie.Contacts.PhoneNumber
+  alias Archie.Relationships.Relationship
 
   schema "contacts" do
     field :dob, :date
@@ -14,7 +15,26 @@ defmodule Archie.Contacts.Contact do
     embeds_many :emails, Email, on_replace: :delete
     embeds_many :phone_numbers, PhoneNumber, on_replace: :delete
 
+    has_many :source_relationships, Relationship, foreign_key: :source_contact_id
+    has_many :related_relationships, Relationship, foreign_key: :related_contact_id
+
     timestamps()
+  end
+
+  def all_relationships(contact) do
+    contact =
+      Repo.preload(contact,
+        source_relationships: [:related_contact],
+        related_relationships: [:source_contact]
+      )
+
+    source_relationships =
+      contact.source_relationships |> Enum.map(fn r -> %{r | contact: r.related_contact} end)
+
+    related_relationships =
+      contact.related_relationships |> Enum.map(fn r -> %{r | contact: r.source_contact} end)
+
+    source_relationships ++ related_relationships
   end
 
   @doc false

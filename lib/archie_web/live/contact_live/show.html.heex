@@ -11,22 +11,87 @@
   </:actions>
 </.header>
 
-<div class="mt-14">
-  <dl class="-my-4 divide-y divide-zinc-100">
-    <div :for={email <- @contact.emails} class="flex gap-4 py-4 text-sm leading-6 sm:gap-8">
-      <dt class="w-1/4 flex-none text-zinc-500"><%= gettext("Email") %> (<%= email.label %>)</dt>
-      <dd class="text-zinc-700"><%= email.value %></dd>
+<div class="mt-6">
+  <div class="grid grid-cols-6">
+    <div class="col-span-4">
+      <dl class="-my-4 divide-y divide-zinc-100">
+        <div :for={email <- @contact.emails} class="flex gap-4 py-4 text-sm leading-6 sm:gap-8">
+          <dt class="w-1/4 flex-none text-zinc-500">
+            <%= gettext("Email") %> (<%= email.label %>)
+          </dt>
+          <dd class="text-zinc-700"><%= email.value %></dd>
+        </div>
+        <div
+          :for={phone_number <- @contact.phone_numbers}
+          class="flex gap-4 py-4 text-sm leading-6 sm:gap-8"
+        >
+          <dt class="w-1/4 flex-none text-zinc-500">
+            <%= gettext("Phone number") %> (<%= phone_number.label %>)
+          </dt>
+          <dd class="text-zinc-700"><%= phone_number.value %></dd>
+        </div>
+      </dl>
     </div>
-    <div
-      :for={phone_number <- @contact.phone_numbers}
-      class="flex gap-4 py-4 text-sm leading-6 sm:gap-8"
-    >
-      <dt class="w-1/4 flex-none text-zinc-500">
-        <%= gettext("Phone number") %> (<%= phone_number.label %>)
-      </dt>
-      <dd class="text-zinc-700"><%= phone_number.value %></dd>
+    <div class="col-span-2">
+      <h3 class="font-medium text-gray-900">Relationships</h3>
+      <ul role="list" class="mt-2 divide-y divide-gray-200 border-b border-t border-gray-200">
+        <%= for r <- @relationships do %>
+          <li class="flex items-center justify-between py-3">
+            <div class="flex items-center">
+              <p class="ml-4 text-sm font-medium text-gray-900">
+                <%= Contact.display_name(r.contact) %>
+              </p>
+            </div>
+            <button
+              type="button"
+              class="ml-6 rounded-md bg-white text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              phx-click="delete_relationship"
+              phx-value-id={r.id}
+            >
+              Remove<span class="sr-only"> <%= Contact.display_name(r.contact) %></span>
+            </button>
+          </li>
+        <% end %>
+        <li class="flex items-center justify-between py-2">
+          <button
+            type="button"
+            class="group -ml-1 flex items-center rounded-md bg-white p-1 "
+            phx-click={JS.toggle(to: "#new-relationship", in: "fade-in", out: "fade-out")}
+          >
+            <span class="flex h-8 w-8 items-center justify-center rounded-full border-2 border-dashed border-gray-300 text-gray-400">
+              <.icon name="hero-plus-small" class="h-5 w-5" />
+            </span>
+            <span class="ml-4 text-sm font-medium text-green-600 group-hover:text-green-500">
+              <%= gettext("Add relationship") %>
+            </span>
+          </button>
+        </li>
+      </ul>
+
+      <.simple_form
+        for={@new_relationship_form}
+        phx-submit="save_relationship"
+        id="new-relationship"
+        class="hidden"
+      >
+        <.input
+          type="select"
+          field={@new_relationship_form[:type]}
+          label="Type"
+          options={Archie.Relationships.Relationship.types()}
+        />
+        <.input
+          type="select"
+          field={@new_relationship_form[:related_contact_id]}
+          label="Related contact"
+          options={@contact_options}
+        />
+        <:actions>
+          <.button>Save</.button>
+        </:actions>
+      </.simple_form>
     </div>
-  </dl>
+  </div>
 </div>
 
 <.back navigate={~p"/contacts"}><%= gettext("Back to contacts") %></.back>
