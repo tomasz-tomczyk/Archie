@@ -16,6 +16,8 @@ defmodule ArchieWeb.ContactLive.Show do
     contact = Contacts.get_contact!(id)
     relationships = Relationships.all_relationships(contact)
 
+    grouped_relationships = Relationships.group_relationships(relationships)
+
     contact_options =
       Contacts.list_contacts() |> Enum.map(fn c -> {Contact.display_name(c), c.id} end)
 
@@ -28,7 +30,7 @@ defmodule ArchieWeb.ContactLive.Show do
      |> assign(:page_title, Contact.display_name(contact))
      |> assign(:contact_options, contact_options)
      |> assign(:contact, contact)
-     |> assign(:relationships, relationships)
+     |> assign(:relationships, grouped_relationships)
      |> assign(:new_relationship_form, new_relationship_form)}
   end
 

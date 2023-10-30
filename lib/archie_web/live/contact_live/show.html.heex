@@ -33,46 +33,86 @@
       </dl>
     </div>
     <div class="col-span-2">
-      <h3 class="font-medium text-gray-900">Relationships</h3>
-      <ul role="list" class="mt-2 divide-y divide-gray-200 border-b border-t border-gray-200">
-        <%= for r <- @relationships do %>
-          <li class="flex items-center justify-between py-3">
-            <.link patch={~p"/contacts/#{r.contact}"}>
-              <div class="flex items-center">
-                <p class="text-sm font-medium text-gray-900">
-                  <.relation type={r.type} class="mr-1" />
-                  <%= Contact.display_name(r.contact) %>
-                </p>
-              </div>
-            </.link>
+      <div :if={@relationships[:family]} class="mb-2">
+        <header class="inline-flex items-center">
+          <span class="rounded-lg p-3 mr-3 bg-pink-50 text-pink-700 ring-4 ring-white">
+            <.icon name="hero-home" class="h-6 w-6" />
+          </span>
 
-            <button
-              phx-click="delete_relationship"
-              phx-value-id={r.id}
-              data-confirm="Are you sure?"
-            >
-              <.icon
-                name="hero-trash"
-                class="w-4 h-4 relative text-gray-300 hover:text-amber-700"
-              />
-            </button>
-          </li>
-        <% end %>
-        <li class="flex items-center justify-between py-2">
-          <button
-            type="button"
-            class="group -ml-1 flex items-center rounded-md bg-white p-1 "
-            phx-click={JS.toggle(to: "#new-relationship", in: "fade-in", out: "fade-out")}
-          >
-            <span class="flex h-8 w-8 items-center justify-center rounded-full border-2 border-dashed border-gray-300 text-gray-400">
-              <.icon name="hero-plus-small" class="h-5 w-5" />
-            </span>
-            <span class="ml-4 text-sm font-medium text-green-600 group-hover:text-green-500">
-              <%= gettext("Add relationship") %>
-            </span>
-          </button>
-        </li>
-      </ul>
+          <h3 class="font-semibold text-pink-900">Family</h3>
+        </header>
+        <ul role="list" class="mt-2 divide-y divide-gray-200 border-b border-t border-gray-200">
+          <%= for r <- @relationships[:family] do %>
+            <li class="flex items-center justify-between py-3">
+              <.link patch={~p"/contacts/#{r.contact}"}>
+                <div class="flex items-center">
+                  <p class="text-sm font-medium text-gray-900">
+                    <.relation type={r.type} class="mr-1" />
+                    <%= Contact.display_name(r.contact) %>
+                  </p>
+                </div>
+              </.link>
+
+              <button
+                phx-click="delete_relationship"
+                phx-value-id={r.id}
+                data-confirm="Are you sure?"
+              >
+                <.icon
+                  name="hero-trash"
+                  class="w-4 h-4 relative text-gray-300 hover:text-amber-700"
+                />
+              </button>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <div :if={@relationships[:other]} class="mb-2">
+        <header class="inline-flex items-center">
+          <span class="rounded-lg p-3 mr-3 bg-green-50 text-green-700 ring-4 ring-white">
+            <.icon name="hero-user-group" class="h-6 w-6" />
+          </span>
+
+          <h3 class="font-semibold text-green-900">Other</h3>
+        </header>
+        <ul role="list" class="mt-2 divide-y divide-gray-200 border-b border-t border-gray-200">
+          <%= for r <- @relationships[:other] do %>
+            <li class="flex items-center justify-between py-3">
+              <.link patch={~p"/contacts/#{r.contact}"}>
+                <div class="flex items-center">
+                  <p class="text-sm font-medium text-gray-900">
+                    <.relation type={r.type} class="mr-1" />
+                    <%= Contact.display_name(r.contact) %>
+                  </p>
+                </div>
+              </.link>
+
+              <button
+                phx-click="delete_relationship"
+                phx-value-id={r.id}
+                data-confirm="Are you sure?"
+              >
+                <.icon
+                  name="hero-trash"
+                  class="w-4 h-4 relative text-gray-300 hover:text-amber-700"
+                />
+              </button>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <button
+        type="button"
+        class="group -ml-1 flex items-center rounded-md bg-white p-1 "
+        phx-click={JS.toggle(to: "#new-relationship", in: "fade-in", out: "fade-out")}
+      >
+        <span class="flex h-8 w-8 items-center justify-center rounded-full border-2 border-dashed border-gray-300 text-gray-400">
+          <.icon name="hero-plus-small" class="h-5 w-5" />
+        </span>
+        <span class="ml-4 text-sm font-medium text-green-600 group-hover:text-green-500">
+          <%= gettext("Add relationship") %>
+        </span>
+      </button>
 
       <.simple_form
         for={@new_relationship_form}

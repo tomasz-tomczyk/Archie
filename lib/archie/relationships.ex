@@ -124,4 +124,22 @@ defmodule Archie.Relationships do
   defp inverse_relationship(:parent), do: :child
   defp inverse_relationship(:child), do: :parent
   defp inverse_relationship(type), do: type
+
+  def group_relationships(relationships) do
+    importance_order = [:spouse, :partner, :child, :sibling, :parent, :cousin]
+
+    relationships
+    |> Enum.group_by(fn r ->
+      case r.type do
+        type when type in [:spouse, :partner, :sibling, :child, :cousin, :parent] -> :family
+        _type -> :other
+      end
+    end)
+    |> Enum.map(fn {group, rels} ->
+      {group,
+       Enum.sort_by(rels, fn r ->
+         Enum.find_index(importance_order, fn type -> type == r.type end)
+       end)}
+    end)
+  end
 end
