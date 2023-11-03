@@ -2,7 +2,7 @@ name: Elixir CI
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main", "excoveralls"]
   pull_request:
     branches: ["main"]
 
