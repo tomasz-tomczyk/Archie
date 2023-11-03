@@ -22,7 +22,7 @@ jobs:
         elixir: ["1.15.6"]
     steps:
       - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.9.0
+        uses: styfle/cancel-workflow-action@0.12.0
         with:
           access_token: ${{ github.token }}
       - name: Set up Elixir
@@ -91,7 +91,7 @@ jobs:
         elixir: ["1.15.6"]
     steps:
       - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.9.0
+        uses: styfle/cancel-workflow-action@0.12.0
         with:
           access_token: ${{ github.token }}
       - name: Set up Elixir
@@ -124,7 +124,7 @@ jobs:
         elixir: ["1.15.6"]
     steps:
       - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.9.0
+        uses: styfle/cancel-workflow-action@0.12.0
         with:
           access_token: ${{ github.token }}
       - name: Checkout Github repo
