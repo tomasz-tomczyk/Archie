@@ -1,0 +1,4 @@
+coverage:
+  status:
+    # Require coverage to increase on each commit
+    auto: true
