@@ -1,18 +1,10 @@
 # Archie
 
-To start your Phoenix server:
+[![Elixir CI](https://github.com/tomasz-tomczyk/Archie/actions/workflows/elixir.yaml/badge.svg?branch=main)](https://github.com/tomasz-tomczyk/Archie/actions/workflows/elixir.yaml) [![Coverage Status](https://coveralls.io/repos/github/tomasz-tomczyk/Archie/badge.svg?branch=main)](https://coveralls.io/github/tomasz-tomczyk/Archie?branch=main)
 
-  * Run `mix setup` to install and setup dependencies
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+## Setup
+
+- Run `mix setup` to install and setup dependencies
+- Start `mix phx.server` or inside IEx with `iex -S mix phx.server`
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
-
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
-
-## Learn more
-
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix

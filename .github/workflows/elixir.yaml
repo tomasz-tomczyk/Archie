@@ -171,4 +171,4 @@ jobs:
             priv/plts
       - run: mix format --check-formatted
       - run: mix credo
-      - run: mix dialyzer --no-check --ignore-exit-status
+      - run: mix dialyzer --format github
