@@ -106,7 +106,6 @@ defmodule ArchieWeb.ContactLive.RelationshipFormComponent do
     {:ok,
      socket
      |> assign(assigns)
-     |> assign(:whatever, nil)
      |> assign(:search_results, [])
      |> assign(:selected_contact, nil)
      |> assign(:new_relationship, new_relationship)
