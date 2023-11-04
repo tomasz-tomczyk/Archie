@@ -1,14 +1,12 @@
 defmodule Archie.RelationshipsTest do
   use Archie.DataCase, async: false
+  import Archie.ContactsFixtures
+  import Archie.RelationshipsFixtures
 
   alias Archie.Relationships
+  alias Archie.Relationships.Relationship
 
   describe "relationships" do
-    alias Archie.Relationships.Relationship
-
-    import Archie.RelationshipsFixtures
-    import Archie.ContactsFixtures
-
     @invalid_attrs %{type: nil}
 
     test "list_relationships/0 returns all relationships" do
@@ -69,6 +67,46 @@ defmodule Archie.RelationshipsTest do
     test "change_relationship/1 returns a relationship changeset" do
       relationship = relationship_fixture()
       assert %Ecto.Changeset{} = Relationships.change_relationship(relationship)
+    end
+  end
+
+  describe "group_relationships/1" do
+    test "returns and ordered relationships" do
+      %{id: source_contact_id} = source_contact = contact_fixture()
+      %{id: related_contact_id} = related_contact = contact_fixture()
+
+      _relationship1 =
+        relationship_fixture(
+          source_contact_id: source_contact.id,
+          related_contact_id: related_contact.id,
+          type: :friend
+        )
+
+      _relationship2 =
+        relationship_fixture(
+          source_contact_id: related_contact.id,
+          related_contact_id: source_contact.id,
+          type: :spouse
+        )
+
+      assert %{
+               family: [
+                 %Relationship{
+                   source_contact_id: ^related_contact_id,
+                   related_contact_id: ^source_contact_id,
+                   type: :spouse
+                 }
+               ],
+               other: [
+                 %Relationship{
+                   source_contact_id: ^source_contact_id,
+                   related_contact_id: ^related_contact_id,
+                   type: :friend
+                 }
+               ]
+             } =
+               Relationships.all_relationships(source_contact)
+               |> Relationships.group_relationships()
     end
   end
 end

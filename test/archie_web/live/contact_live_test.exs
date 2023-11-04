@@ -6,7 +6,7 @@ defmodule ArchieWeb.ContactLiveTest do
 
   @create_attrs %{
     dob: "2023-10-07",
-    first_name: "some first_name",
+    first_name: "John",
     last_name: "some last_name"
   }
   @update_attrs %{
@@ -17,7 +17,7 @@ defmodule ArchieWeb.ContactLiveTest do
   @invalid_attrs %{dob: nil, first_name: nil, last_name: nil}
 
   defp create_contact(_ctx) do
-    contact = contact_fixture()
+    contact = contact_fixture(first_name: "John")
     %{contact: contact}
   end
 
@@ -51,7 +51,7 @@ defmodule ArchieWeb.ContactLiveTest do
 
       html = render(index_live)
       assert html =~ "Contact created successfully"
-      assert html =~ "some first_name"
+      assert html =~ "John"
     end
 
     test "updates contact in listing", %{conn: conn, contact: contact} do
@@ -99,7 +99,7 @@ defmodule ArchieWeb.ContactLiveTest do
       {:ok, show_live, _html} = live(conn, ~p"/contacts/#{contact}")
 
       assert show_live |> element("a", "Edit") |> render_click() =~
-               "some first_name"
+               "John"
 
       assert_patch(show_live, ~p"/contacts/#{contact}/show/edit")
 

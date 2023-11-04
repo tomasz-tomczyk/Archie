@@ -63,8 +63,11 @@ defmodule Archie.Contacts do
   def create_contact(name) when is_binary(name) do
     String.split(name, " ", trim: true)
     |> case do
-      [first_name, last_name] -> create_contact(%{first_name: first_name, last_name: last_name})
-      [name] -> create_contact(%{first_name: name})
+      [first_name, last_name] ->
+        create_contact(%{first_name: first_name, last_name: last_name})
+
+      [first_name | rest] ->
+        create_contact(%{first_name: first_name, last_name: List.last(rest)})
     end
   end
 
@@ -117,6 +120,10 @@ defmodule Archie.Contacts do
     Contact.changeset(contact, attrs)
   end
 
+  @doc """
+  Performs a full-text search for contacts.
+  """
+  @spec search(String.t()) :: list(Contact.t())
   def search(term) when term in ["", nil] do
     Contact
     |> Repo.all()
@@ -129,6 +136,15 @@ defmodule Archie.Contacts do
       on: c.id == fts.uuid
     )
     |> Repo.all()
+  end
+
+  @doc """
+  Performs a full-text search for contacts, excluding the given contact and its
+  relationships.
+  """
+  @spec search(String.t(), Ecto.UUID.t()) :: list(Contact.t())
+  def search(term, excluded_contact_id) when excluded_contact_id in ["", nil] do
+    search(term)
   end
 
   def search(term, excluded_contact_id) when term in ["", nil] do

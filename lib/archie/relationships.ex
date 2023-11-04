@@ -141,6 +141,7 @@ defmodule Archie.Relationships do
          Enum.find_index(importance_order, fn type -> type == r.type end)
        end)}
     end)
+    |> Enum.into(%{})
   end
 
   @doc """

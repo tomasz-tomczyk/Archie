@@ -9,14 +9,16 @@ defmodule Archie.ContactsFixtures do
   """
   def contact_fixture(attrs \\ %{}) do
     {:ok, contact} =
-      attrs
-      |> Enum.into(%{
-        "dob" => ~D[2023-10-07],
-        "emails" => %{},
-        "first_name" => "some first_name",
-        "last_name" => "some last_name",
-        "phone_numbers" => %{}
-      })
+      Enum.into(
+        attrs,
+        %{
+          dob: ~D[1990-01-01],
+          emails: %{},
+          first_name: Faker.Person.first_name(),
+          last_name: Faker.Person.last_name(),
+          phone_numbers: [%{label: "personal", value: Faker.Phone.EnGb.number()}]
+        }
+      )
       |> Archie.Contacts.create_contact()
 
     contact
