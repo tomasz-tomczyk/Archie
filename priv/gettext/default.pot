@@ -11,42 +11,49 @@
 msgid ""
 msgstr ""
 
-#: lib/archie/relationships/relationship.ex:31
+
+msgid "primary"
+msgstr ""
+
+msgid "secondary"
+msgstr ""
+
+#: lib/archie/relationships/relationship.ex:30
 #, elixir-autogen
 msgid "Spouse"
 msgstr ""
 
-#: lib/archie/relationships/relationship.ex:32
+#: lib/archie/relationships/relationship.ex:31
 #, elixir-autogen
 msgid "Partner"
 msgstr ""
 
-#: lib/archie/relationships/relationship.ex:33
+#: lib/archie/relationships/relationship.ex:32
 #, elixir-autogen
 msgid "Sibling"
 msgstr ""
 
-#: lib/archie/relationships/relationship.ex:34
+#: lib/archie/relationships/relationship.ex:33
 #, elixir-autogen
 msgid "Child"
 msgstr ""
 
-#: lib/archie/relationships/relationship.ex:35
+#: lib/archie/relationships/relationship.ex:34
 #, elixir-autogen
 msgid "Cousin"
 msgstr ""
 
-#: lib/archie/relationships/relationship.ex:36
+#: lib/archie/relationships/relationship.ex:35
 #, elixir-autogen
 msgid "Parent"
 msgstr ""
 
-#: lib/archie/relationships/relationship.ex:37
+#: lib/archie/relationships/relationship.ex:36
 #, elixir-autogen
 msgid "Friend"
 msgstr ""
 
-#: lib/archie_web/components/core_components.ex:476
+#: lib/archie_web/components/core_components.ex:475
 #, elixir-autogen, elixir-format
 msgid "Actions"
 msgstr ""
@@ -113,12 +120,12 @@ msgstr ""
 msgid "Show"
 msgstr ""
 
-#: lib/archie_web/live/contact_live/show.html.heex:71
+#: lib/archie_web/live/contact_live/show.html.heex:118
 #, elixir-autogen, elixir-format
 msgid "Add relationship"
 msgstr ""
 
-#: lib/archie_web/live/contact_live/show.html.heex:103
+#: lib/archie_web/live/contact_live/show.html.heex:131
 #, elixir-autogen, elixir-format
 msgid "Back to contacts"
 msgstr ""
@@ -133,17 +140,17 @@ msgstr ""
 msgid "Contact updated successfully"
 msgstr ""
 
-#: lib/archie_web/live/contact_live/show.ex:65
+#: lib/archie_web/live/contact_live/show.ex:46
 #, elixir-autogen, elixir-format
 msgid "Could not delete the relationship"
 msgstr ""
 
-#: lib/archie_web/live/contact_live/show.html.heex:9
+#: lib/archie_web/live/contact_live/show.html.heex:14
 #, elixir-autogen, elixir-format
 msgid "Edit contact"
 msgstr ""
 
-#: lib/archie_web/live/contact_live/show.html.heex:20
+#: lib/archie_web/live/contact_live/show.html.heex:25
 #, elixir-autogen, elixir-format
 msgid "Email"
 msgstr ""
@@ -154,17 +161,17 @@ msgstr ""
 msgid "Personal"
 msgstr ""
 
-#: lib/archie_web/live/contact_live/show.html.heex:29
+#: lib/archie_web/live/contact_live/show.html.heex:34
 #, elixir-autogen, elixir-format
 msgid "Phone number"
 msgstr ""
 
-#: lib/archie_web/live/contact_live/show.ex:59
+#: lib/archie_web/live/contact_live/show.ex:40
 #, elixir-autogen, elixir-format
 msgid "Relationship deleted"
 msgstr ""
 
-#: lib/archie_web/live/contact_live/show.ex:43
+#: lib/archie_web/live/contact_live/relationship_form_component.ex:134
 #, elixir-autogen, elixir-format
 msgid "Relationship saved"
 msgstr ""

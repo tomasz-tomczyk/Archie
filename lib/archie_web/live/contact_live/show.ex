@@ -47,4 +47,16 @@ defmodule ArchieWeb.ContactLive.Show do
          |> push_patch(to: "/contacts/#{socket.assigns.contact.id}")}
     end
   end
+
+  @impl Phoenix.LiveView
+  def handle_event("toggle-type", _params, socket) do
+    type = if socket.assigns.contact.type == :primary, do: :secondary, else: :primary
+
+    {:ok, contact} =
+      Contacts.update_contact(socket.assigns.contact, %{type: type})
+
+    {:noreply,
+     socket
+     |> assign(:contact, contact)}
+  end
 end

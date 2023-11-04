@@ -414,7 +414,6 @@ defmodule ArchieWeb.CoreComponents do
   Renders a header with title.
   """
   attr :class, :string, default: nil
-  attr :skip_subtitle, :boolean, default: false
 
   slot :inner_block, required: true
   slot :subtitle
@@ -427,7 +426,7 @@ defmodule ArchieWeb.CoreComponents do
         <h1 class="text-lg font-semibold leading-8 text-zinc-800">
           <%= render_slot(@inner_block) %>
         </h1>
-        <p :if={!@skip_subtitle && @subtitle != []} class="mt-2 text-sm leading-6 text-zinc-600">
+        <p :if={@subtitle != []} class="mt-2 text-sm leading-6 text-zinc-600">
           <%= render_slot(@subtitle) %>
         </p>
       </div>

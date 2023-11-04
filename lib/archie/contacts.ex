@@ -18,8 +18,9 @@ defmodule Archie.Contacts do
       [%Contact{}, ...]
 
   """
-  def list_contacts do
-    Repo.all(Contact)
+  def list_contacts(filters \\ []) do
+    from(Contact, where: ^filters)
+    |> Repo.all()
   end
 
   @doc """
@@ -40,6 +41,8 @@ defmodule Archie.Contacts do
 
   @doc """
   Creates a contact.
+
+  When creating from just a name, the name is split into first and last name. By default, those contacts are also created as secondary.
 
   ## Examples
 
@@ -64,10 +67,10 @@ defmodule Archie.Contacts do
     String.split(name, " ", trim: true)
     |> case do
       [first_name, last_name] ->
-        create_contact(%{first_name: first_name, last_name: last_name})
+        create_contact(%{first_name: first_name, last_name: last_name, type: :secondary})
 
       [first_name | rest] ->
-        create_contact(%{first_name: first_name, last_name: List.last(rest)})
+        create_contact(%{first_name: first_name, last_name: List.last(rest), type: :secondary})
     end
   end
 

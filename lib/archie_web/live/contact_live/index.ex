@@ -6,7 +6,7 @@ defmodule ArchieWeb.ContactLive.Index do
 
   @impl Phoenix.LiveView
   def mount(_params, _session, socket) do
-    {:ok, stream(socket, :contacts, Contacts.list_contacts())}
+    {:ok, stream(socket, :contacts, Contacts.list_contacts(type: :primary))}
   end
 
   @impl Phoenix.LiveView

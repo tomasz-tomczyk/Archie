@@ -12,6 +12,8 @@ defmodule Archie.Contacts.Contact do
     field :first_name, :string
     field :last_name, :string
 
+    field(:type, Ecto.Enum, values: [:primary, :secondary], default: :primary)
+
     embeds_many :emails, Email, on_replace: :delete
     embeds_many :phone_numbers, PhoneNumber, on_replace: :delete
 
@@ -24,8 +26,8 @@ defmodule Archie.Contacts.Contact do
   @doc false
   def changeset(contact, attrs) do
     contact
-    |> cast(attrs, [:first_name, :last_name, :dob])
-    |> validate_required([:first_name])
+    |> cast(attrs, [:first_name, :last_name, :dob, :type])
+    |> validate_required([:first_name, :type])
     |> cast_embed(:emails,
       with: &Email.changeset/2,
       sort_param: :emails_sort,

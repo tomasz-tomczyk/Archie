@@ -1,8 +1,20 @@
-<.header skip_subtitle={@contact.dob in ["", nil]}>
+<.header>
   <%!-- <%= @contact.first_name %> <%= @contact.last_name %> --%>
   <:subtitle>
-    <.icon name="hero-calendar-days" class="h-5 w-5 -mt-1" />
-    <%= @contact.dob %>
+    <.link
+      phx-click="toggle-type"
+      class={[
+        "inline-flex items-center rounded-full  px-2 py-1 text-xs font-medium  ring-1 ring-inset",
+        @contact.type == :primary && "bg-green-50 text-green-700 ring-green-600/20",
+        @contact.type == :secondary && "bg-yellow-50 text-yellow-700 ring-yellow-600/20"
+      ]}
+    >
+      <%= Gettext.gettext(ArchieWeb.Gettext, to_string(@contact.type)) %>
+    </.link>
+    <span :if={@contact.dob not in ["", nil]}>
+      <.icon name="hero-calendar-days" class="h-5 w-5 -mt-1" />
+      <%= @contact.dob %>
+    </span>
   </:subtitle>
   <:actions>
     <.link patch={~p"/contacts/#{@contact}/show/edit"} phx-click={JS.push_focus()}>
