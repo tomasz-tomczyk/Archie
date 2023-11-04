@@ -107,7 +107,7 @@ defmodule Archie.RelationshipsTest do
 
       assert Relationships.all_relationships(source_contact)
              |> Relationships.group_relationships()
-             |> Map.get(:family)
+             |> Map.get(:family, [])
              |> Enum.map(& &1.type) == [:spouse, :partner, :child, :sibling, :parent, :cousin]
     end
 

@@ -21,7 +21,7 @@ defmodule ArchieWeb.ContactLive.RelationshipFormComponent do
       >
         <div class="relative my-2">
           <input
-            id="combobox"
+            id="relationship-contact-search"
             name="term"
             phx-target={@myself}
             phx-change="search"
@@ -106,6 +106,7 @@ defmodule ArchieWeb.ContactLive.RelationshipFormComponent do
     {:ok,
      socket
      |> assign(assigns)
+     |> assign(:whatever, nil)
      |> assign(:search_results, [])
      |> assign(:selected_contact, nil)
      |> assign(:new_relationship, new_relationship)
