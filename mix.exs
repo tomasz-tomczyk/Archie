@@ -10,7 +10,7 @@ defmodule Archie.MixProject do
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
-      dialyzer: [plt_core_path: "priv/plts"],
+      dialyzer: [plt_core_path: "priv/plts", ignore_warnings: "config/.dialyzer_ignore.exs"],
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [
         coveralls: :test,
