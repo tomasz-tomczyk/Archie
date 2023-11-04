@@ -71,42 +71,83 @@ defmodule Archie.RelationshipsTest do
   end
 
   describe "group_relationships/1" do
-    test "returns and ordered relationships" do
+    test "returns grouped relationships" do
       %{id: source_contact_id} = source_contact = contact_fixture()
-      %{id: related_contact_id} = related_contact = contact_fixture()
 
-      _relationship1 =
-        relationship_fixture(
-          source_contact_id: source_contact.id,
-          related_contact_id: related_contact.id,
-          type: :friend
-        )
-
-      _relationship2 =
-        relationship_fixture(
-          source_contact_id: related_contact.id,
-          related_contact_id: source_contact.id,
-          type: :spouse
-        )
+      _friend = relationship_fixture(source_contact: source_contact, type: :friend)
+      _spouse = relationship_fixture(source_contact: source_contact, type: :spouse)
 
       assert %{
                family: [
                  %Relationship{
-                   source_contact_id: ^related_contact_id,
-                   related_contact_id: ^source_contact_id,
+                   source_contact_id: ^source_contact_id,
                    type: :spouse
                  }
                ],
                other: [
                  %Relationship{
                    source_contact_id: ^source_contact_id,
-                   related_contact_id: ^related_contact_id,
                    type: :friend
                  }
                ]
              } =
                Relationships.all_relationships(source_contact)
                |> Relationships.group_relationships()
+    end
+
+    test "returns family in the priority order" do
+      source_contact = contact_fixture()
+
+      relationship_fixture(source_contact: source_contact, type: :cousin)
+      relationship_fixture(source_contact: source_contact, type: :sibling)
+      relationship_fixture(source_contact: source_contact, type: :parent)
+      relationship_fixture(source_contact: source_contact, type: :child)
+      relationship_fixture(source_contact: source_contact, type: :spouse)
+      relationship_fixture(source_contact: source_contact, type: :partner)
+
+      assert Relationships.all_relationships(source_contact)
+             |> Relationships.group_relationships()
+             |> Map.get(:family)
+             |> Enum.map(& &1.type) == [:spouse, :partner, :child, :sibling, :parent, :cousin]
+    end
+
+    test "for parent <-> child relationship, from child parent perspective, the relationship is a parent" do
+      parent = contact_fixture(first_name: "John")
+      child = contact_fixture(first_name: "Jane")
+
+      _relationship =
+        relationship_fixture(source_contact: parent, related_contact: child, type: :child)
+
+      [r] =
+        Relationships.all_relationships(child)
+
+      assert r.type == :parent
+    end
+
+    test "for child <-> parent relationship, from the parent perspective, the relationship is a child" do
+      parent = contact_fixture(first_name: "John")
+      child = contact_fixture(first_name: "Jane")
+
+      _relationship =
+        relationship_fixture(source_contact: child, related_contact: parent, type: :parent)
+
+      [r] =
+        Relationships.all_relationships(parent)
+
+      assert r.type == :child
+    end
+
+    test "does not invert a relationship that isn't parent or child" do
+      person = contact_fixture(first_name: "John")
+      friend = contact_fixture(first_name: "Jane")
+
+      _relationship =
+        relationship_fixture(source_contact: friend, related_contact: person, type: :friend)
+
+      [r] =
+        Relationships.all_relationships(person)
+
+      assert r.type == :friend
     end
   end
 end
