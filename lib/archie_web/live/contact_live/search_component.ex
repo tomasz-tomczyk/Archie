@@ -41,8 +41,8 @@ defmodule ArchieWeb.ContactLive.SearchComponent do
                 role="option"
                 tabindex="-1"
                 id={"result-#{r.id}"}
-                phx-target={@phx_target}
-                phx-click={@click_event}
+                phx-target={@myself}
+                phx-click="select-search-result"
                 phx-value-id={r.id}
               >
                 <span class="block truncate">
@@ -62,14 +62,6 @@ defmodule ArchieWeb.ContactLive.SearchComponent do
     socket =
       socket
       |> assign(assigns)
-      |> assign_new(:click_event, fn -> "select-search-result" end)
-      |> assign_new(:phx_target, fn
-        %{click_event: "select-search-result"} ->
-          socket.assigns.myself
-
-        _otherwise ->
-          socket.parent_pid
-      end)
       |> assign(:search_results, [])
 
     {:ok, socket}
@@ -84,7 +76,7 @@ defmodule ArchieWeb.ContactLive.SearchComponent do
 
   @impl Phoenix.LiveComponent
   def handle_event("focus", _params, socket) do
-    results = Contacts.search("")
+    results = Contacts.search()
 
     {:noreply, assign(socket, :search_results, results)}
   end

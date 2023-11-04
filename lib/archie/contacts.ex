@@ -126,7 +126,9 @@ defmodule Archie.Contacts do
   @doc """
   Performs a full-text search for contacts.
   """
-  @spec search(String.t()) :: list(Contact.t())
+  @spec search(String.t() | nil) :: list(Contact.t())
+  def search(term \\ nil)
+
   def search(term) when term in ["", nil] do
     Contact
     |> Repo.all()
