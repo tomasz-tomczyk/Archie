@@ -17,7 +17,7 @@ defmodule ArchieWeb.Router do
   scope "/", ArchieWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/", DashboardLive.Index, :index
 
     live "/contacts", ContactLive.Index, :index
     live "/contacts/new", ContactLive.Index, :new
