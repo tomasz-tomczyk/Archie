@@ -23,9 +23,9 @@ defmodule ArchieWeb.ContactLive.RelationshipFormComponentTest do
       |> element("#relationship-contact-search")
       |> render_focus()
 
-    assert html =~ result1.last_name
-    assert html =~ result2.first_name
-    assert html =~ result3.last_name
+    assert html =~ html_escaped(result1.last_name)
+    assert html =~ html_escaped(result2.first_name)
+    assert html =~ html_escaped(result3.last_name)
   end
 
   test "searching name returns the relevant contacts", %{conn: conn, contact: contact} do
@@ -41,9 +41,9 @@ defmodule ArchieWeb.ContactLive.RelationshipFormComponentTest do
       |> element("#relationship-contact-search")
       |> render_change(term: "FakerWontCreateThis")
 
-    assert html =~ result1.last_name
-    refute html =~ result2.first_name
-    refute html =~ result3.last_name
+    assert html =~ html_escaped(result1.last_name)
+    refute html =~ html_escaped(result2.first_name)
+    refute html =~ html_escaped(result3.last_name)
   end
 
   test "searching a blank phrase returns all available contacts", %{conn: conn, contact: contact} do
@@ -56,8 +56,8 @@ defmodule ArchieWeb.ContactLive.RelationshipFormComponentTest do
       |> element("#relationship-contact-search")
       |> render_change(term: "")
 
-    assert html =~ result1.first_name
-    assert html =~ result2.last_name
+    assert html =~ html_escaped(result1.first_name)
+    assert html =~ html_escaped(result2.last_name)
   end
 
   test "searching a blank phrase does not include an existing relationship in the results", %{
@@ -75,6 +75,6 @@ defmodule ArchieWeb.ContactLive.RelationshipFormComponentTest do
       |> element("#relationship-contact-search")
       |> render_change(term: "")
 
-    refute html =~ friend.first_name
+    refute html =~ html_escaped(friend.first_name)
   end
 end

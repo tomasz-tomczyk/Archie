@@ -28,6 +28,8 @@ defmodule ArchieWeb.ConnCase do
       import Plug.Conn
       import Phoenix.ConnTest
       import ArchieWeb.ConnCase
+
+      defdelegate html_escaped(string), to: Plug.HTML, as: :html_escape
     end
   end
 
