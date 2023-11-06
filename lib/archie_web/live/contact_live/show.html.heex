@@ -25,7 +25,7 @@
 
 <div class="mt-6">
   <div class="grid grid-cols-6">
-    <div class="col-span-4">
+    <div class="col-span-6 md:col-span-4">
       <dl class="-my-4 divide-y divide-zinc-100">
         <div :for={email <- @contact.emails} class="flex gap-4 py-4 text-sm leading-6 sm:gap-8">
           <dt class="w-1/4 flex-none text-zinc-500">
@@ -44,7 +44,7 @@
         </div>
       </dl>
     </div>
-    <div class="col-span-2">
+    <div class="col-span-6 md:col-span-2">
       <div :if={@relationships[:family]} class="mb-2">
         <header class="inline-flex items-center">
           <span class="rounded-lg p-3 mr-3 bg-pink-50 text-pink-700 ring-4 ring-white">
@@ -68,7 +68,7 @@
               <button
                 phx-click="delete_relationship"
                 phx-value-id={r.id}
-                data-confirm="Are you sure?"
+                data-confirm="Do you want to remove this relationship? The contact will not be deleted."
               >
                 <.icon
                   name="hero-trash"
