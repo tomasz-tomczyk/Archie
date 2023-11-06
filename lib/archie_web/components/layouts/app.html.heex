@@ -1,24 +1,21 @@
 <div class="min-h-full">
   <div class="bg-slate-900 pb-32">
-    <nav class="border-b border-lime-300 border-opacity-25 bg-slate-900 lg:border-none">
+    <nav class="border-b border-amber-300 border-opacity-25 bg-slate-900 lg:border-none">
       <div class="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
-        <div class="relative flex h-16 items-center justify-between lg:border-b lg:border-lime-400 lg:border-opacity-25">
+        <div class="relative flex h-16 items-center justify-between lg:border-b lg:border-amber-400 lg:border-opacity-25">
           <div class="flex items-center px-2 lg:px-0">
             <div class="flex-shrink-0">
-              <img
-                class="block h-8 w-8"
-                src="https://tailwindui.com/img/logos/mark.svg?color=lime&shade=300"
-                alt="Your Company"
-              />
+              <.link navigate={~p"/"}>
+                <.icon name="hero-book-open" class="text-amber-500 block h-8 w-8" />
+              </.link>
             </div>
             <div class="hidden lg:ml-10 lg:block">
               <div class="flex space-x-4">
-                <!-- Current: "bg-lime-700 text-white", Default: "text-white hover:bg-lime-500 hover:bg-opacity-75" -->
                 <.link
                   navigate={~p"/"}
                   class={[
-                    @path == "home" && "bg-lime-600",
-                    "hover:bg-lime-600 text-white rounded-md py-2 px-3 text-sm font-medium"
+                    @path == "home" && "bg-slate-700/60 hover:bg-slate-700",
+                    "hover:bg-amber-600 text-white rounded-md py-2 px-3 text-sm font-medium"
                   ]}
                 >
                   Home
@@ -26,8 +23,8 @@
                 <.link
                   navigate={~p"/contacts"}
                   class={[
-                    @path == "contacts" && "bg-lime-600",
-                    "hover:bg-lime-600 text-white rounded-md py-2 px-3 text-sm font-medium"
+                    @path == "contacts" && "bg-slate-700/60 hover:bg-slate-700",
+                    "hover:bg-amber-600 text-white rounded-md py-2 px-3 text-sm font-medium"
                   ]}
                 >
                   Contacts
@@ -44,38 +41,14 @@
             <!-- Mobile menu button -->
             <button
               type="button"
-              class="relative inline-flex items-center justify-center rounded-md bg-slate-900 p-2 text-lime-200 hover:bg-lime-500 hover:bg-opacity-75 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-slate-900"
+              class="relative inline-flex items-center justify-center rounded-md bg-slate-900 p-2 text-amber-200 hover:bg-amber-500 hover:bg-opacity-75 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-slate-900"
               aria-controls="mobile-menu"
               aria-expanded="false"
+              phx-click={JS.toggle(to: "#mobile-menu")}
             >
               <span class="absolute -inset-0.5"></span>
               <span class="sr-only">Open main menu</span>
-              <!-- Menu open: "hidden", Menu closed: "block" -->
-              <svg
-                class="block h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-                />
-              </svg>
-              <!-- Menu open: "block", Menu closed: "hidden" -->
-              <svg
-                class="hidden h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
+              <.icon name="hero-bars-3" class=" h-6 w-6" />
             </button>
           </div>
           <div class="hidden lg:ml-4 lg:block">
@@ -83,7 +56,7 @@
               <.link patch={~p"/contacts/new"}>
                 <button
                   type="button"
-                  class="relative inline-flex items-center gap-x-1.5 rounded-md bg-green-500 px-3 py-2 mr-3 text-sm font-semibold text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500"
+                  class="relative inline-flex items-center gap-x-1.5 rounded-md bg-green-600 px-3 py-2 mr-3 text-sm font-semibold text-white shadow-sm hover:bg-green-700  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500"
                 >
                   <.icon name="hero-user-plus" class="-ml-0.5 h-5 w-5" /> New Contact
                 </button>
@@ -91,36 +64,20 @@
 
               <button
                 type="button"
-                class="relative inline-flex items-center gap-x-1.5 rounded-md bg-amber-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-amber-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500"
+                class="relative inline-flex items-center gap-x-1.5 rounded-md bg-amber-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-amber-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500"
               >
-                <.icon name="hero-document-plus" class="-ml-0.5 h-5 w-5" /> New Note
+                <.icon name="hero-plus" class="-ml-0.5 h-5 w-5" /> New Note
               </button>
             </div>
           </div>
         </div>
       </div>
-      <!-- Mobile menu, show/hide based on menu state. -->
-      <div class="lg:hidden" id="mobile-menu">
-        <div class="space-y-1 px-2 pb-3 pt-2">
-          <!-- Current: "bg-lime-700 text-white", Default: "text-white hover:bg-lime-500 hover:bg-opacity-75" -->
-          <.link
-            navigate={~p"/"}
-            class="bg-lime-700 text-white block rounded-md py-2 px-3 text-base font-medium"
-          >
-            Home
-          </.link>
-          <.link
-            navigate={~p"/contacts"}
-            class="text-white hover:bg-lime-500 hover:bg-opacity-75 block rounded-md py-2 px-3 text-base font-medium"
-          >
-            Contacts
-          </.link>
-        </div>
+      <div class="hidden" id="mobile-menu">
         <div class="space-y-1 px-2 pb-3 pt-2 text-center">
           <.link patch={~p"/contacts/new"}>
             <button
               type="button"
-              class="relative inline-flex items-center gap-x-1.5 rounded-md bg-green-500 px-3 py-2 mr-3 text-sm font-semibold text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500"
+              class="relative inline-flex items-center gap-x-1.5 rounded-md bg-green-600 px-3 py-2 mr-3 text-sm font-semibold text-white shadow-sm hover:bg-green-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500"
             >
               <.icon name="hero-user-plus" class="-ml-0.5 h-5 w-5" /> New Contact
             </button>
@@ -128,18 +85,30 @@
 
           <button
             type="button"
-            class="relative inline-flex items-center gap-x-1.5 rounded-md bg-amber-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-amber-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500"
+            class="relative inline-flex items-center gap-x-1.5 rounded-md bg-amber-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-amber-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500"
           >
-            <svg
-              class="-ml-0.5 h-5 w-5"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
-            </svg>
-            New Note
+            <.icon name="hero-plus" class="-ml-0.5 h-5 w-5" /> New Note
           </button>
+        </div>
+        <div class="space-y-1 px-2 pb-3 pt-2">
+          <.link
+            navigate={~p"/"}
+            class={[
+              @path == "home" && "bg-slate-700/60 hover:bg-slate-700",
+              "hover:bg-amber-700 text-white block rounded-md py-2 px-3 text-base font-medium"
+            ]}
+          >
+            Home
+          </.link>
+          <.link
+            navigate={~p"/contacts"}
+            class={[
+              @path == "contacts" && "bg-slate-700/60 hover:bg-slate-700",
+              "text-white hover:bg-amber-500 hover:bg-opacity-75 block rounded-md py-2 px-3 text-base font-medium"
+            ]}
+          >
+            Contacts
+          </.link>
         </div>
       </div>
     </nav>

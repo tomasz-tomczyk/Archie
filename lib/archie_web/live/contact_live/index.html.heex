@@ -4,7 +4,7 @@
     <.link patch={~p"/contacts/new"}>
       <button
         type="button"
-        class="relative inline-flex items-center gap-x-1.5 rounded-md bg-green-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500"
+        class="relative inline-flex items-center gap-x-1.5 rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500"
       >
         <.icon name="hero-user-plus" class="-ml-0.5 h-5 w-5" /> <%= gettext("New Contact") %>
       </button>
@@ -19,7 +19,9 @@
 >
   <:col :let={{_id, contact}} label={gettext("First name")}><%= contact.first_name %></:col>
   <:col :let={{_id, contact}} label={gettext("Last name")}><%= contact.last_name %></:col>
-  <:col :let={{_id, contact}} label={gettext("Date of Birth")}><%= contact.dob %></:col>
+  <:col :let={{_id, contact}} label={gettext("Date of Birth")} class="hidden">
+    <%= contact.dob %>
+  </:col>
   <:action :let={{_id, contact}}>
     <div class="sr-only">
       <.link navigate={~p"/contacts/#{contact}"}><%= gettext("Show") %></.link>

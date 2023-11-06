@@ -67,7 +67,7 @@ defmodule ArchieWeb.ContactLive.FormComponent do
           <input type="checkbox" name="contact[phone_numbers_sort][]" class="hidden" />
           <span
             type="button"
-            class="inline-flex items-center gap-x-1.5 rounded-md bg-green-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
+            class="inline-flex items-center gap-x-1.5 rounded-md bg-green-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-green-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
           >
             <.icon name="hero-plus-circle" class="-ml-0.5 h-5 w-5" /> <%= gettext("add phone number") %>
           </span>
@@ -98,7 +98,7 @@ defmodule ArchieWeb.ContactLive.FormComponent do
           <input type="checkbox" name="contact[emails_sort][]" class="hidden" />
           <span
             type="button"
-            class="inline-flex items-center gap-x-1.5 rounded-md bg-green-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
+            class="inline-flex items-center gap-x-1.5 rounded-md bg-green-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-green-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
           >
             <.icon name="hero-plus-circle" class="-ml-0.5 h-5 w-5" /> <%= gettext("add email") %>
           </span>
