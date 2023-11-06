@@ -39,6 +39,36 @@ defmodule Archie.RelationshipsTest do
       assert {:error, %Ecto.Changeset{}} = Relationships.create_relationship(@invalid_attrs)
     end
 
+    test "create_relationship/1 does not allow creating a duplicate relationship" do
+      relationship = relationship_fixture()
+
+      new_relationship = %{
+        source_contact_id: relationship.source_contact_id,
+        related_contact_id: relationship.related_contact_id
+      }
+
+      assert {:error,
+              %Ecto.Changeset{
+                errors: [source_contact_id: {"has this relationship already", _details}]
+              }} =
+               Relationships.create_relationship(new_relationship)
+    end
+
+    test "create_relationship/1 does not allow creating an inverse relationship" do
+      relationship = relationship_fixture()
+
+      new_relationship = %{
+        source_contact_id: relationship.related_contact_id,
+        related_contact_id: relationship.source_contact_id
+      }
+
+      assert {:error,
+              %Ecto.Changeset{
+                errors: [related_contact_id: {"has this relationship already", _details}]
+              }} =
+               Relationships.create_relationship(new_relationship)
+    end
+
     test "update_relationship/2 with valid data updates the relationship" do
       relationship = relationship_fixture()
       update_attrs = %{type: :spouse}
