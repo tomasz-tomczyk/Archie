@@ -10,12 +10,11 @@ ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-debian-$
 ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
 
 ARG SECRET_KEY_BASE
-ARG DATABASE_PATH="/data/archie.db"
 
 FROM ${BUILDER_IMAGE} as builder
 
 # install build dependencies
-RUN apt-get update -y && apt-get install --no-cache -y build-essential git \
+RUN apt-get update -y && apt-get install -y build-essential git \
     && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
 # prepare build dir
@@ -27,7 +26,6 @@ RUN mix local.hex --force && \
 
 # set build ENV
 ENV MIX_ENV="prod"
-ENV DATABASE_PATH=${DATABASE_PATH}
 ENV SECRET_KEY_BASE=${SECRET_KEY_BASE:-kxEfCdixUV3kGSNRfubMVL9Epqtm/m6/4g73afI2eYqu06fArQjONPjA0iLGcy9P}
 
 # install mix dependencies
@@ -52,16 +50,13 @@ RUN mix compile
 COPY config/runtime.exs config/
 
 COPY rel rel
-VOLUME /data
 
-RUN mix ecto.create
 RUN mix release
 
 # start a new build stage so that the final image will only contain
 # the compiled release and other runtime necessities
 FROM ${RUNNER_IMAGE}
 
-ARG DATABASE_PATH
 ARG SECRET_KEY_BASE
 
 RUN apt-get update -y && apt-get install -y libstdc++6 openssl libncurses5 locales \
@@ -74,15 +69,13 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 ENV MIX_ENV="prod"
-ENV DATABASE_PATH=${DATABASE_PATH}
 ENV SECRET_KEY_BASE=${SECRET_KEY_BASE:-kxEfCdixUV3kGSNRfubMVL9Epqtm/m6/4g73afI2eYqu06fArQjONPjA0iLGcy9P}
 
 WORKDIR "/app"
-RUN chown nobody /app
 
 # Only copy the final release from the build stage
-COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/archie ./
+COPY --from=builder /app/_build/${MIX_ENV}/rel/archie ./
 
-USER nobody
+VOLUME /data
 
 CMD ./bin/archie eval "Archie.Release.migrate" && /app/bin/server

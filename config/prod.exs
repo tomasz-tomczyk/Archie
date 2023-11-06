@@ -7,6 +7,10 @@ import Config
 # before starting your production server.
 config :archie, ArchieWeb.Endpoint, cache_static_manifest: "priv/static/cache_manifest.json"
 
+config :archie, Archie.Repo,
+  database: "/data/archie.db",
+  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "5")
+
 # Configures Swoosh API Client
 config :swoosh, api_client: Swoosh.ApiClient.Finch, finch_name: Archie.Finch
 
