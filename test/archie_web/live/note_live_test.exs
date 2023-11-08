@@ -1,5 +1,5 @@
 defmodule ArchieWeb.NoteLiveTest do
-  use ArchieWeb.ConnCase, async: true
+  use ArchieWeb.ConnCase, async: false
 
   import Phoenix.LiveViewTest
   import Archie.TimelineFixtures
