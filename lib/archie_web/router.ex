@@ -25,6 +25,10 @@ defmodule ArchieWeb.Router do
 
     live "/contacts/:id", ContactLive.Show, :show
     live "/contacts/:id/show/edit", ContactLive.Show, :edit
+
+    live "/notes", NoteLive.Index, :index
+    live "/notes/new", NoteLive.Index, :new
+    live "/notes/:id/edit", NoteLive.Index, :edit
   end
 
   # Other scopes may use custom stacks.

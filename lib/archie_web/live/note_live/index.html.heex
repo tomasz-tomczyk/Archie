@@ -1,0 +1,34 @@
+<.header>
+  Listing Notes
+  <:actions>
+    <.link patch={~p"/notes/new"}>
+      <.button>New Note</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table id="notes" rows={@streams.notes}>
+  <:col :let={{_id, note}} label="Body"><%= note.body %></:col>
+  <:action :let={{_id, note}}>
+    <.link patch={~p"/notes/#{note}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, note}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: note.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="note-modal" show on_cancel={JS.patch(~p"/notes")}>
+  <.live_component
+    module={ArchieWeb.NoteLive.FormComponent}
+    id={@note.id || :new}
+    title={@page_title}
+    action={@live_action}
+    note={@note}
+    patch={~p"/notes"}
+  />
+</.modal>

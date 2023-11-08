@@ -4,6 +4,8 @@ defmodule ArchieWeb.ContactLive.Show do
   alias Archie.Contacts
   alias Archie.Contacts.Contact
   alias Archie.Relationships
+  alias Archie.Timeline
+  alias Archie.Timeline.Note
 
   @impl Phoenix.LiveView
   def mount(_params, _session, socket) do
@@ -20,13 +22,22 @@ defmodule ArchieWeb.ContactLive.Show do
     contact_options =
       Contacts.list_contacts() |> Enum.map(fn c -> {Contact.display_name(c), c.id} end)
 
+    notes = Timeline.list_notes(contact_id: contact.id)
+
+    notes_count = length(notes)
+
+    note = %Note{contact_id: contact.id}
+
     {:noreply,
      socket
      |> assign(:path, "contacts")
      |> assign(:page_title, Contact.display_name(contact))
      |> assign(:contact_options, contact_options)
      |> assign(:contact, contact)
-     |> assign(:relationships, grouped_relationships)}
+     |> assign(:relationships, grouped_relationships)
+     |> assign(:note, note)
+     |> assign(:notes, notes)
+     |> assign(:notes_count, notes_count)}
   end
 
   @impl Phoenix.LiveView
