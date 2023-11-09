@@ -16,12 +16,14 @@ defmodule ArchieWeb.NoteLive.FormComponent do
         phx-submit="save"
       >
         <.input
+          :if={!@embedded}
           field={@form[:contact_id]}
           type="select"
           label="Contact"
           options={@contacts}
           prompt="Choose contact..."
         />
+        <.input :if={@embedded} field={@form[:contact_id]} type="hidden" />
         <.input field={@form[:body]} type="textarea" label="Note" />
         <:actions>
           <.button phx-disable-with="Saving...">Save Note</.button>
@@ -44,6 +46,7 @@ defmodule ArchieWeb.NoteLive.FormComponent do
     {:ok,
      socket
      |> assign(assigns)
+     |> assign_new(:embedded, fn -> false end)
      |> assign(:contacts, contacts)
      |> assign_form(changeset)}
   end

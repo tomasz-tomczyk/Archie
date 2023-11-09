@@ -18,7 +18,7 @@ defmodule Archie.Timeline do
 
   """
   def list_notes(filters \\ []) do
-    from(Note, where: ^filters)
+    from(Note, where: ^filters, order_by: [desc: :inserted_at])
     |> Repo.all()
   end
 
