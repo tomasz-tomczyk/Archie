@@ -24,7 +24,7 @@
 </.header>
 
 <div class="mt-6">
-  <div class="grid grid-cols-6">
+  <div class="grid grid-cols-6 gap-6">
     <div class="col-span-6 md:col-span-4">
       <dl class="-my-4 divide-y divide-zinc-100">
         <div :for={email <- @contact.emails} class="flex gap-4 py-4 text-sm leading-6 sm:gap-8">
@@ -43,6 +43,82 @@
           <dd class="text-zinc-700"><%= phone_number.value %></dd>
         </div>
       </dl>
+
+      <div class="mt-8 border-t border-gray-200 pt-6">
+        <div class="flex flex-wrap items-center gap-6 sm:flex-nowrap sm:pr-6 lg:pr-8">
+          <h1 class="text-base font-semibold leading-7 text-gray-900">Timeline</h1>
+          <div class="order-last flex w-full gap-x-8 text-sm font-semibold leading-6 sm:order-none sm:w-auto sm:border-l sm:border-gray-200 sm:pl-6 sm:leading-7">
+            <a href="#" class="text-gray-700 cursor-not-allowed">Last year</a>
+            <a href="#" class="text-amber-600">All-time</a>
+          </div>
+          <a
+            href="#"
+            phx-click={JS.toggle(to: "#new-note")}
+            class="ml-auto flex items-center gap-x-1 rounded-md bg-amber-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-amber-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
+          >
+            <.icon name="hero-plus-small" class="-ml-0.5 h-5 w-5" /> New note
+          </a>
+        </div>
+      </div>
+
+      <div id="new-note" class="mt-8 hidden">
+        <.live_component
+          module={ArchieWeb.NoteLive.FormComponent}
+          id={@note.id || :new}
+          title={@page_title}
+          action={:new}
+          note={@note}
+          patch={~p"/contacts/#{@contact}"}
+          embedded={true}
+        />
+      </div>
+
+      <div class="flow-root mt-8">
+        <ul role="list" class="-mb-8">
+          <li :for={{note, index} <- Enum.with_index(@notes)}>
+            <div class="relative pb-4">
+              <span
+                :if={index != @notes_count - 1}
+                class="absolute left-5 top-5 -ml-px h-full w-0.5 bg-gray-200"
+                aria-hidden="true"
+              >
+              </span>
+              <div class="relative flex items-start space-x-3">
+                <div>
+                  <div class="relative px-1">
+                    <div class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 ring-8 ring-white">
+                      <.icon name="hero-chat-bubble-left-ellipsis" class="h-5 w-5 text-gray-500" />
+                    </div>
+                  </div>
+                </div>
+                <div class="min-w-0 flex-1 py-1.5">
+                  <div class="text-sm text-gray-500">
+                    Note
+                    <time
+                      class="whitespace-nowrap underline decoration-dotted underline-offset-4 decoration-1 text-xs"
+                      datetime={note.inserted_at}
+                    >
+                      <%= Timeline.display_date(note) %>
+                    </time>
+
+                    <button phx-click="delete_note" phx-value-id={note.id} class="ml-1">
+                      <.icon
+                        name="hero-trash"
+                        class="w-4 h-4 relative text-gray-300 hover:text-amber-700"
+                      />
+                    </button>
+                  </div>
+                  <div class="mt-2 text-sm text-gray-700">
+                    <p>
+                      <%= note.body %>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
     <div class="col-span-6 md:col-span-2">
       <div :if={@relationships[:family]} class="mb-2">
