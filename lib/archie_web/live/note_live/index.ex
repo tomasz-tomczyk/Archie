@@ -1,12 +1,13 @@
 defmodule ArchieWeb.NoteLive.Index do
   use ArchieWeb, :live_view
 
+  alias Archie.Contacts.Contact
   alias Archie.Timeline
   alias Archie.Timeline.Note
 
   @impl Phoenix.LiveView
   def mount(_params, _session, socket) do
-    {:ok, stream(socket, :notes, Timeline.list_notes())}
+    {:ok, stream(socket, :notes, Timeline.list_notes() |> Archie.Repo.preload(:contact))}
   end
 
   @impl Phoenix.LiveView
@@ -38,13 +39,5 @@ defmodule ArchieWeb.NoteLive.Index do
   @impl Phoenix.LiveView
   def handle_info({ArchieWeb.NoteLive.FormComponent, {:saved, note}}, socket) do
     {:noreply, stream_insert(socket, :notes, note)}
-  end
-
-  @impl Phoenix.LiveView
-  def handle_event("delete", %{"id" => id}, socket) do
-    note = Timeline.get_note!(id)
-    {:ok, _} = Timeline.delete_note(note)
-
-    {:noreply, stream_delete(socket, :notes, note)}
   end
 end

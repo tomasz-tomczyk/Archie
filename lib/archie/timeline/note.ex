@@ -6,7 +6,7 @@ defmodule Archie.Timeline.Note do
 
   schema "notes" do
     field :body, :string
-    field :contact_id, :binary_id
+    belongs_to :contact, Archie.Contacts.Contact
 
     timestamps()
   end

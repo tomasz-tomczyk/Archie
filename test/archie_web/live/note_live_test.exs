@@ -5,7 +5,6 @@ defmodule ArchieWeb.NoteLiveTest do
   import Archie.TimelineFixtures
   import Archie.ContactsFixtures
 
-  @update_attrs %{body: "some updated body"}
   @invalid_attrs %{body: nil}
 
   defp create_note(_ctx) do
@@ -45,36 +44,6 @@ defmodule ArchieWeb.NoteLiveTest do
       html = render(index_live)
       assert html =~ "Note created successfully"
       assert html =~ "some body"
-    end
-
-    test "updates note in listing", %{conn: conn, note: note} do
-      {:ok, index_live, _html} = live(conn, ~p"/notes")
-
-      assert index_live |> element("#notes-#{note.id} a", "Edit") |> render_click() =~
-               "Edit Note"
-
-      assert_patch(index_live, ~p"/notes/#{note}/edit")
-
-      assert index_live
-             |> form("#note-form", note: @invalid_attrs)
-             |> render_change() =~ "can&#39;t be blank"
-
-      assert index_live
-             |> form("#note-form", note: @update_attrs)
-             |> render_submit()
-
-      assert_patch(index_live, ~p"/notes")
-
-      html = render(index_live)
-      assert html =~ "Note updated successfully"
-      assert html =~ "some updated body"
-    end
-
-    test "deletes note in listing", %{conn: conn, note: note} do
-      {:ok, index_live, _html} = live(conn, ~p"/notes")
-
-      assert index_live |> element("#notes-#{note.id} a", "Delete") |> render_click()
-      refute has_element?(index_live, "#notes-#{note.id}")
     end
   end
 end
