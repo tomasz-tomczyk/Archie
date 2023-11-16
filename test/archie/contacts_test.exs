@@ -119,26 +119,26 @@ defmodule Archie.ContactsTest do
   describe "search/2" do
     test "returns all contacts when given empty term and no id to exclude" do
       contact = contact_fixture()
-      assert Contacts.search("", nil) == [contact]
-      assert Contacts.search(nil, nil) == [contact]
+      assert Contacts.search("", excluded_contact_id: nil) == [contact]
+      assert Contacts.search(nil, excluded_contact_id: nil) == [contact]
     end
 
     test "returns all contacts except the excluded one when given empty term and id to exclude" do
       kept_contact = contact_fixture()
       excluded_contact = contact_fixture()
-      assert Contacts.search("", excluded_contact.id) == [kept_contact]
-      assert Contacts.search(nil, excluded_contact.id) == [kept_contact]
+      assert Contacts.search("", excluded_contact_id: excluded_contact.id) == [kept_contact]
+      assert Contacts.search(nil, excluded_contact_id: excluded_contact.id) == [kept_contact]
     end
 
     test "returns matching contacts when given non-empty term and no id to exclude" do
       contact = contact_fixture(first_name: "Tomasz", last_name: "Tomczyk")
-      assert Contacts.search("Tom", nil) == [contact]
+      assert Contacts.search("Tom", excluded_contact_id: nil) == [contact]
     end
 
     test "returns matching contacts except the excluded one when given non-empty term and id to exclude" do
       kept_contact = contact_fixture(first_name: "Tomasz", last_name: "Tomczyk")
       excluded_contact = contact_fixture()
-      assert Contacts.search("Tom", excluded_contact.id) == [kept_contact]
+      assert Contacts.search("Tom", excluded_contact_id: excluded_contact.id) == [kept_contact]
     end
 
     test "returns matching contacts except the excluded one and its relationships" do
@@ -149,8 +149,8 @@ defmodule Archie.ContactsTest do
       _relationship =
         relationship_fixture(source_contact: excluded_contact, related_contact: related_contact)
 
-      assert Contacts.search("John", excluded_contact.id) == [kept_contact]
-      assert Contacts.search("", excluded_contact.id) == [kept_contact]
+      assert Contacts.search("John", excluded_contact_id: excluded_contact.id) == [kept_contact]
+      assert Contacts.search("", excluded_contact_id: excluded_contact.id) == [kept_contact]
     end
   end
 end

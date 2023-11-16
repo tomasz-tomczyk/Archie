@@ -153,7 +153,7 @@ defmodule ArchieWeb.ContactLive.RelationshipFormComponent do
 
   @impl Phoenix.LiveComponent
   def handle_event("search", %{"term" => term}, socket) when term in ["", nil] do
-    results = Contacts.search(term, socket.assigns.contact.id)
+    results = Contacts.search(term, excluded_contact_id: socket.assigns.contact.id)
 
     changes =
       Map.put(
@@ -176,7 +176,7 @@ defmodule ArchieWeb.ContactLive.RelationshipFormComponent do
 
   @impl Phoenix.LiveComponent
   def handle_event("search", %{"term" => term}, socket) do
-    results = Contacts.search(term, socket.assigns.contact.id)
+    results = Contacts.search(term, excluded_contact_id: socket.assigns.contact.id)
 
     {:noreply,
      socket
@@ -186,7 +186,7 @@ defmodule ArchieWeb.ContactLive.RelationshipFormComponent do
 
   @impl Phoenix.LiveComponent
   def handle_event("focus", _params, socket) do
-    results = Contacts.search("", socket.assigns.contact.id)
+    results = Contacts.search("", excluded_contact_id: socket.assigns.contact.id)
 
     {:noreply, assign(socket, :search_results, results)}
   end
