@@ -126,47 +126,36 @@ defmodule Archie.Contacts do
   @doc """
   Performs a full-text search for contacts.
   """
-  @spec search(String.t() | nil) :: list(Contact.t())
-  def search(term \\ nil)
+  @type filters :: [
+          {:limit, integer()},
+          {:excluded_contact_id, Ecto.UUID.t()}
+        ]
 
-  def search(term) when term in ["", nil] do
-    Contact
+  @spec search(String.t() | nil, filters :: filters()) :: list(Contact.t())
+
+  def search(term \\ nil, filters \\ []) do
+    limit = Keyword.get(filters, :limit, 5)
+    excluded_contact_id = Keyword.get(filters, :excluded_contact_id)
+
+    search_base_query(term)
+    |> exclude_related(excluded_contact_id)
+    |> limit(^limit)
     |> Repo.all()
   end
 
-  def search(term) do
+  defp search_base_query(term) when term in ["", nil] do
+    from(c in Contact)
+  end
+
+  defp search_base_query(term) do
     from(c in Contact,
       join:
         fts in fragment("SELECT uuid FROM contacts_fts WHERE contacts_fts MATCH ?", ^"#{term}*"),
       on: c.id == fts.uuid
     )
-    |> Repo.all()
   end
 
-  @doc """
-  Performs a full-text search for contacts, excluding the given contact and its
-  relationships.
-  """
-  @spec search(String.t(), Ecto.UUID.t()) :: list(Contact.t())
-  def search(term, excluded_contact_id) when excluded_contact_id in ["", nil] do
-    search(term)
-  end
-
-  def search(term, excluded_contact_id) when term in ["", nil] do
-    Contact
-    |> exclude_related(excluded_contact_id)
-    |> Repo.all()
-  end
-
-  def search(term, excluded_contact_id) do
-    from(c in Contact,
-      join:
-        fts in fragment("SELECT uuid FROM contacts_fts WHERE contacts_fts MATCH ?", ^"#{term}*"),
-      on: c.id == fts.uuid
-    )
-    |> exclude_related(excluded_contact_id)
-    |> Repo.all()
-  end
+  defp exclude_related(query, nil = _contact_id), do: query
 
   defp exclude_related(query, contact_id) do
     exclude_ids = [contact_id | Relationships.get_related_contact_ids(contact_id)]
