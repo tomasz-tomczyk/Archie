@@ -71,12 +71,14 @@
                 </button>
               </.link>
 
-              <button
-                type="button"
-                class="relative inline-flex items-center gap-x-1.5 rounded-md bg-amber-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-amber-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500"
-              >
-                <.icon name="hero-plus-small" class="-ml-0.5 h-5 w-5" /> New Note
-              </button>
+              <.link patch={~p"/notes/new"}>
+                <button
+                  type="button"
+                  class="relative inline-flex items-center gap-x-1.5 rounded-md bg-amber-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-amber-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500"
+                >
+                  <.icon name="hero-plus-small" class="-ml-0.5 h-5 w-5" /> New Note
+                </button>
+              </.link>
             </div>
           </div>
         </div>
@@ -92,12 +94,14 @@
             </button>
           </.link>
 
-          <button
-            type="button"
-            class="relative inline-flex items-center gap-x-1.5 rounded-md bg-amber-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-amber-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500"
-          >
-            <.icon name="hero-plus-small" class="-ml-0.5 h-5 w-5" /> New Note
-          </button>
+          <.link patch={~p"/notes/new"}>
+            <button
+              type="button"
+              class="relative inline-flex items-center gap-x-1.5 rounded-md bg-amber-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-amber-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500"
+            >
+              <.icon name="hero-plus-small" class="-ml-0.5 h-5 w-5" /> New Note
+            </button>
+          </.link>
         </div>
         <div class="space-y-1 px-2 pb-3 pt-2">
           <.link

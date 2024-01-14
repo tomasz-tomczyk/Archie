@@ -59,6 +59,8 @@ defmodule Archie.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:timex, "~> 3.7"},
+      {:bumblebee, "~> 0.4.2"},
+      {:exla, ">= 0.0.0"},
       {:excoveralls, "~> 0.14", only: :test},
       {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},

@@ -7,6 +7,11 @@ defmodule Archie.Application do
 
   @impl Application
   def start(_type, _args) do
+    {:ok, model} = Bumblebee.load_model({:hf, "dslim/bert-base-NER"})
+    {:ok, tokenizer} = Bumblebee.load_tokenizer({:hf, "bert-base-cased"})
+
+    serving = Bumblebee.Text.token_classification(model, tokenizer, aggregation: :same)
+
     children = [
       # Start the Telemetry supervisor
       ArchieWeb.Telemetry,
@@ -16,6 +21,7 @@ defmodule Archie.Application do
       {Phoenix.PubSub, name: Archie.PubSub},
       # Start Finch
       {Finch, name: Archie.Finch},
+      {Nx.Serving, serving: serving, name: Archie.Serving, batch_timeout: 100},
       # Start the Endpoint (http/https)
       ArchieWeb.Endpoint
       # Start a worker by calling: Archie.Worker.start_link(arg)

@@ -1,6 +1,7 @@
 defmodule ArchieWeb.NoteLive.FormComponent do
   use ArchieWeb, :live_component
 
+  alias Archie.Contacts
   alias Archie.Contacts.Contact
   alias Archie.Timeline
 
@@ -57,6 +58,35 @@ defmodule ArchieWeb.NoteLive.FormComponent do
       socket.assigns.note
       |> Timeline.change_note(note_params)
       |> Map.put(:action, :validate)
+
+    body = Map.get(note_params, "body")
+
+    changeset =
+      if String.length(body) > 0 do
+        phrase =
+          Nx.Serving.batched_run(Archie.Serving, body,
+            batch_size: 1,
+            batch_timeout: 100
+          )
+          |> Map.get(:entities)
+          |> Enum.filter(fn entity -> Map.get(entity, :label) == "PER" end)
+          |> case do
+            [entity | _] -> Map.get(entity, :phrase)
+            [] -> nil
+          end
+
+        search_results = Contacts.search(phrase)
+
+        if length(search_results) == 1 do
+          contact = hd(search_results)
+
+          Ecto.Changeset.put_change(changeset, :contact_id, contact.id)
+        else
+          changeset
+        end
+      else
+        changeset
+      end
 
     {:noreply, assign_form(socket, changeset)}
   end
