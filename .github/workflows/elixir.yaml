@@ -89,6 +89,8 @@ jobs:
       matrix:
         otp: ["26.1.1"]
         elixir: ["1.15.6"]
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Set up Elixir
         uses: erlef/setup-beam@v1
@@ -110,8 +112,6 @@ jobs:
           path: _build
           key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-${{ env.cache-name }}-${{ hashFiles('mix.lock') }}
       - name: Run tests with coverage
-        env:
-          GITHUB_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
         run: mix coveralls.github
 
   static-code-analysis:
