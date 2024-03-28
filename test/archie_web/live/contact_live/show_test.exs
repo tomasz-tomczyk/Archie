@@ -1,8 +1,8 @@
 defmodule ArchieWeb.ContactLive.ShowTest do
   use ArchieWeb.ConnCase, async: false
 
-  import Phoenix.LiveViewTest
   import Archie.ContactsFixtures
+  import Phoenix.LiveViewTest
 
   @update_attrs %{
     dob: "2023-10-08",

@@ -1,4 +1,5 @@
 defmodule ArchieWeb.ContactLive.Index do
+  @moduledoc false
   use ArchieWeb, :live_view
 
   alias Archie.Contacts

@@ -4,8 +4,8 @@ defmodule Archie.Timeline do
   """
 
   import Ecto.Query, warn: false
-  alias Archie.Repo
 
+  alias Archie.Repo
   alias Archie.Timeline.Note
 
   @doc """
@@ -18,8 +18,7 @@ defmodule Archie.Timeline do
 
   """
   def list_notes(filters \\ []) do
-    from(Note, where: ^filters, order_by: [desc: :inserted_at])
-    |> Repo.all()
+    Repo.all(from(Note, where: ^filters, order_by: [desc: :inserted_at]))
   end
 
   @doc """
@@ -104,7 +103,7 @@ defmodule Archie.Timeline do
   end
 
   def display_date(note) do
-    if Timex.diff(Timex.now(), note.inserted_at, :days) > 2 do
+    if Timex.diff(DateTime.utc_now(), note.inserted_at, :days) > 2 do
       Timex.format!(note.inserted_at, "{WDshort} {Mfull} {D}, {YYYY}")
     else
       Timex.from_now(note.inserted_at)

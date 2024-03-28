@@ -5,8 +5,11 @@ defmodule Archie.Schema do
   defmacro __using__(_) do
     quote do
       use Ecto.Schema
+
       import Ecto.Changeset
       import Ecto.Query
+
+      alias __MODULE__
       alias Archie.Repo
 
       @primary_key {:id, :binary_id, autogenerate: true}
@@ -14,8 +17,6 @@ defmodule Archie.Schema do
       @timestamps_opts [type: :utc_datetime]
 
       @type t :: %__MODULE__{}
-
-      alias __MODULE__
     end
   end
 end

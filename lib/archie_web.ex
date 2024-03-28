@@ -24,9 +24,9 @@ defmodule ArchieWeb do
       use Phoenix.Router, helpers: false
 
       # Import common connection and controller functions to use in pipelines
-      import Plug.Conn
       import Phoenix.Controller
       import Phoenix.LiveView.Router
+      import Plug.Conn
     end
   end
 
@@ -42,8 +42,8 @@ defmodule ArchieWeb do
         formats: [:html, :json],
         layouts: [html: ArchieWeb.Layouts]
 
-      import Plug.Conn
       import ArchieWeb.Gettext
+      import Plug.Conn
 
       unquote(verified_routes())
     end
@@ -82,11 +82,11 @@ defmodule ArchieWeb do
   defp html_helpers do
     quote do
       # HTML escaping functionality
-      import Phoenix.HTML
       # Core UI components and translation
       import ArchieWeb.CoreComponents
-      import ArchieWeb.RelationshipComponents
       import ArchieWeb.Gettext
+      import ArchieWeb.RelationshipComponents
+      import Phoenix.HTML
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS

@@ -4,10 +4,10 @@ defmodule Archie.TimelineTest do
   alias Archie.Timeline
 
   describe "notes" do
-    alias Archie.Timeline.Note
-
-    import Archie.TimelineFixtures
     import Archie.ContactsFixtures
+    import Archie.TimelineFixtures
+
+    alias Archie.Timeline.Note
 
     @invalid_attrs %{body: nil}
 

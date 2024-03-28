@@ -1,4 +1,5 @@
 defmodule ArchieWeb.ContactLive.SearchComponent do
+  @moduledoc false
   use ArchieWeb, :live_component
 
   alias Archie.Contacts
@@ -88,8 +89,6 @@ defmodule ArchieWeb.ContactLive.SearchComponent do
 
   @impl Phoenix.LiveComponent
   def handle_event("select-search-result", %{"id" => id}, socket) do
-    {:noreply,
-     socket
-     |> push_navigate(to: "/contacts/#{id}")}
+    {:noreply, push_navigate(socket, to: "/contacts/#{id}")}
   end
 end

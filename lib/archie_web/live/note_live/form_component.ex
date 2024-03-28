@@ -1,4 +1,5 @@
 defmodule ArchieWeb.NoteLive.FormComponent do
+  @moduledoc false
   use ArchieWeb, :live_component
 
   alias Archie.Contacts.Contact
@@ -38,10 +39,7 @@ defmodule ArchieWeb.NoteLive.FormComponent do
     changeset = Timeline.change_note(note)
 
     contacts =
-      Archie.Contacts.list_contacts()
-      |> Enum.map(fn contact ->
-        {Contact.display_name(contact), contact.id}
-      end)
+      Enum.map(Archie.Contacts.list_contacts(), fn contact -> {Contact.display_name(contact), contact.id} end)
 
     {:ok,
      socket
