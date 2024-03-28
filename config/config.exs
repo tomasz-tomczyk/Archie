@@ -13,6 +13,7 @@ config :archie,
 
 # Configures the endpoint
 config :archie, ArchieWeb.Endpoint,
+  adapter: Bandit.PhoenixAdapter,
   url: [host: "localhost"],
   render_errors: [
     formats: [html: ArchieWeb.ErrorHTML, json: ArchieWeb.ErrorJSON],
