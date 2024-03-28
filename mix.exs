@@ -57,6 +57,7 @@ defmodule Archie.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
+      {:bandit, "~> 1.0"},
       {:plug_cowboy, "~> 2.5"},
       {:timex, "~> 3.7"},
       {:excoveralls, "~> 0.14", only: :test},
