@@ -63,9 +63,7 @@ defmodule Archie.Contacts do
   end
 
   def create_contact(name) when is_binary(name) do
-    name
-    |> String.split(" ", trim: true)
-    |> case do
+    case String.split(name, " ", trim: true) do
       [first_name, last_name] ->
         create_contact(%{first_name: first_name, last_name: last_name, type: :secondary})
 
