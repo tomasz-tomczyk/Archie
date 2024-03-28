@@ -4,10 +4,10 @@ defmodule Archie.Contacts do
   """
 
   import Ecto.Query, warn: false
-  alias Archie.Repo
 
   alias Archie.Contacts.Contact
   alias Archie.Relationships
+  alias Archie.Repo
 
   @doc """
   Returns the list of contacts.
@@ -19,8 +19,7 @@ defmodule Archie.Contacts do
 
   """
   def list_contacts(filters \\ []) do
-    from(Contact, where: ^filters)
-    |> Repo.all()
+    Repo.all(from(Contact, where: ^filters))
   end
 
   @doc """
@@ -64,8 +63,7 @@ defmodule Archie.Contacts do
   end
 
   def create_contact(name) when is_binary(name) do
-    String.split(name, " ", trim: true)
-    |> case do
+    case String.split(name, " ", trim: true) do
       [first_name, last_name] ->
         create_contact(%{first_name: first_name, last_name: last_name, type: :secondary})
 
@@ -137,7 +135,8 @@ defmodule Archie.Contacts do
     limit = Keyword.get(filters, :limit, 5)
     excluded_contact_id = Keyword.get(filters, :excluded_contact_id)
 
-    search_base_query(term)
+    term
+    |> search_base_query()
     |> exclude_related(excluded_contact_id)
     |> limit(^limit)
     |> Repo.all()
@@ -149,8 +148,7 @@ defmodule Archie.Contacts do
 
   defp search_base_query(term) do
     from(c in Contact,
-      join:
-        fts in fragment("SELECT uuid FROM contacts_fts WHERE contacts_fts MATCH ?", ^"#{term}*"),
+      join: fts in fragment("SELECT uuid FROM contacts_fts WHERE contacts_fts MATCH ?", ^"#{term}*"),
       on: c.id == fts.uuid
     )
   end

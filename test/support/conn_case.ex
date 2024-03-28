@@ -20,14 +20,14 @@ defmodule ArchieWeb.ConnCase do
   using do
     quote do
       # The default endpoint for testing
-      @endpoint ArchieWeb.Endpoint
-
       use ArchieWeb, :verified_routes
 
       # Import conveniences for testing with connections
-      import Plug.Conn
-      import Phoenix.ConnTest
       import ArchieWeb.ConnCase
+      import Phoenix.ConnTest
+      import Plug.Conn
+
+      @endpoint ArchieWeb.Endpoint
 
       defdelegate html_escaped(string), to: Plug.HTML, as: :html_escape
     end

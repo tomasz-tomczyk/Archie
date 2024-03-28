@@ -15,16 +15,17 @@ defmodule Archie.DataCase do
   """
 
   use ExUnit.CaseTemplate
+
   alias Ecto.Adapters.SQL.Sandbox
 
   using do
     quote do
-      alias Archie.Repo
-
+      import Archie.DataCase
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-      import Archie.DataCase
+
+      alias Archie.Repo
     end
   end
 

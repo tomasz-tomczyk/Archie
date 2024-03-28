@@ -1,4 +1,5 @@
 defmodule ArchieWeb.ContactLive.Show do
+  @moduledoc false
   use ArchieWeb, :live_view
 
   alias Archie.Contacts
@@ -20,7 +21,7 @@ defmodule ArchieWeb.ContactLive.Show do
     grouped_relationships = Relationships.group_relationships(relationships)
 
     contact_options =
-      Contacts.list_contacts() |> Enum.map(fn c -> {Contact.display_name(c), c.id} end)
+      Enum.map(Contacts.list_contacts(), fn c -> {Contact.display_name(c), c.id} end)
 
     note = %Note{contact_id: contact.id}
 
@@ -61,9 +62,7 @@ defmodule ArchieWeb.ContactLive.Show do
     {:ok, contact} =
       Contacts.update_contact(socket.assigns.contact, %{type: type})
 
-    {:noreply,
-     socket
-     |> assign(:contact, contact)}
+    {:noreply, assign(socket, :contact, contact)}
   end
 
   @impl Phoenix.LiveView

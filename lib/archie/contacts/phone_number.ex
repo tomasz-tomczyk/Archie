@@ -3,6 +3,7 @@ defmodule Archie.Contacts.PhoneNumber do
   A phone number embedded in a contact.
   """
   use Archie.Schema
+
   import ArchieWeb.Gettext
 
   embedded_schema do
@@ -11,8 +12,7 @@ defmodule Archie.Contacts.PhoneNumber do
   end
 
   def changeset(phone_number, params) do
-    phone_number
-    |> cast(params, [:label, :value])
+    cast(phone_number, params, [:label, :value])
   end
 
   def types do

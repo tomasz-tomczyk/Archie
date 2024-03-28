@@ -1,5 +1,6 @@
 defmodule Archie.RelationshipsTest do
   use Archie.DataCase, async: false
+
   import Archie.ContactsFixtures
   import Archie.RelationshipsFixtures
 
@@ -121,7 +122,8 @@ defmodule Archie.RelationshipsTest do
                  }
                ]
              } =
-               Relationships.all_relationships(source_contact)
+               source_contact
+               |> Relationships.all_relationships()
                |> Relationships.group_relationships()
     end
 
@@ -135,7 +137,8 @@ defmodule Archie.RelationshipsTest do
       relationship_fixture(source_contact: source_contact, type: :spouse)
       relationship_fixture(source_contact: source_contact, type: :partner)
 
-      assert Relationships.all_relationships(source_contact)
+      assert source_contact
+             |> Relationships.all_relationships()
              |> Relationships.group_relationships()
              |> Map.get(:family, [])
              |> Enum.map(& &1.type) == [:spouse, :partner, :child, :sibling, :parent, :cousin]

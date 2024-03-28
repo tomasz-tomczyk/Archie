@@ -1,11 +1,11 @@
 defmodule ArchieWeb.ContactLive.RelationshipFormComponent do
+  @moduledoc false
   use ArchieWeb, :live_component
+
   alias Archie.Contacts
   alias Archie.Contacts.Contact
   alias Archie.Relationships
   alias Archie.Relationships.Relationship
-
-  alias Archie.Contacts
 
   @impl Phoenix.LiveComponent
   def render(assigns) do
@@ -115,12 +115,12 @@ defmodule ArchieWeb.ContactLive.RelationshipFormComponent do
   @impl Phoenix.LiveComponent
   def handle_event("save_relationship", %{"relationship" => relationship_attrs} = attrs, socket) do
     relationship_attrs =
-      relationship_attrs |> Map.merge(%{"source_contact_id" => socket.assigns.contact.id})
+      Map.put(relationship_attrs, "source_contact_id", socket.assigns.contact.id)
 
     relationship_attrs =
       if relationship_attrs["related_contact_id"] == "" && attrs["term"] not in ["", nil] do
         {:ok, contact} = Contacts.create_contact(attrs["term"])
-        relationship_attrs |> Map.merge(%{"related_contact_id" => contact.id})
+        Map.put(relationship_attrs, "related_contact_id", contact.id)
       else
         relationship_attrs
       end

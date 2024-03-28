@@ -1,4 +1,5 @@
 defmodule ArchieWeb.ContactLive.FormComponent do
+  @moduledoc false
   use ArchieWeb, :live_component
 
   alias Archie.Contacts

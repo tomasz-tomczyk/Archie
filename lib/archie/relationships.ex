@@ -4,9 +4,9 @@ defmodule Archie.Relationships do
   """
 
   import Ecto.Query, warn: false
-  alias Archie.Repo
 
   alias Archie.Relationships.Relationship
+  alias Archie.Repo
 
   @doc """
   Returns the list of relationships.
@@ -110,11 +110,10 @@ defmodule Archie.Relationships do
       )
 
     source_relationships =
-      contact.source_relationships |> Enum.map(fn r -> %{r | contact: r.related_contact} end)
+      Enum.map(contact.source_relationships, fn r -> %{r | contact: r.related_contact} end)
 
     related_relationships =
-      contact.related_relationships
-      |> Enum.map(fn r ->
+      Enum.map(contact.related_relationships, fn r ->
         %{r | contact: r.source_contact, type: inverse_relationship(r.type)}
       end)
 
@@ -135,13 +134,9 @@ defmodule Archie.Relationships do
         _type -> :other
       end
     end)
-    |> Enum.map(fn {group, rels} ->
-      {group,
-       Enum.sort_by(rels, fn r ->
-         Enum.find_index(importance_order, fn type -> type == r.type end)
-       end)}
+    |> Map.new(fn {group, rels} ->
+      {group, Enum.sort_by(rels, fn r -> Enum.find_index(importance_order, fn type -> type == r.type end) end)}
     end)
-    |> Enum.into(%{})
   end
 
   @doc """
@@ -163,7 +158,8 @@ defmodule Archie.Relationships do
         union_all: ^related_ids_query,
         select: r.related_contact_id
 
-    Repo.all(union_query)
+    union_query
+    |> Repo.all()
     |> Enum.uniq()
   end
 end

@@ -1,5 +1,6 @@
 defmodule Archie.ContactsTest do
   use Archie.DataCase, async: false
+
   import Archie.ContactsFixtures
   import Archie.RelationshipsFixtures
 

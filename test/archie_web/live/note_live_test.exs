@@ -1,9 +1,9 @@
 defmodule ArchieWeb.NoteLiveTest do
   use ArchieWeb.ConnCase, async: false
 
-  import Phoenix.LiveViewTest
-  import Archie.TimelineFixtures
   import Archie.ContactsFixtures
+  import Archie.TimelineFixtures
+  import Phoenix.LiveViewTest
 
   @invalid_attrs %{body: nil}
 

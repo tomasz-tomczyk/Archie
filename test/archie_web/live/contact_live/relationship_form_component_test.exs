@@ -1,9 +1,9 @@
 defmodule ArchieWeb.ContactLive.RelationshipFormComponentTest do
   use ArchieWeb.ConnCase, async: false
 
-  import Phoenix.LiveViewTest
   import Archie.ContactsFixtures
   import Archie.RelationshipsFixtures
+  import Phoenix.LiveViewTest
 
   defp create_contact(_ctx) do
     contact = contact_fixture()

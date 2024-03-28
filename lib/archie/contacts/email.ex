@@ -3,6 +3,7 @@ defmodule Archie.Contacts.Email do
   An email address embedded in a contact.
   """
   use Archie.Schema
+
   import ArchieWeb.Gettext
 
   embedded_schema do
@@ -11,8 +12,7 @@ defmodule Archie.Contacts.Email do
   end
 
   def changeset(email, params) do
-    email
-    |> cast(params, [:label, :value])
+    cast(email, params, [:label, :value])
   end
 
   def types do

@@ -1,4 +1,5 @@
 defmodule ArchieWeb.NoteLive.Index do
+  @moduledoc false
   use ArchieWeb, :live_view
 
   alias Archie.Contacts.Contact
@@ -7,7 +8,7 @@ defmodule ArchieWeb.NoteLive.Index do
 
   @impl Phoenix.LiveView
   def mount(_params, _session, socket) do
-    {:ok, stream(socket, :notes, Timeline.list_notes() |> Archie.Repo.preload(:contact))}
+    {:ok, stream(socket, :notes, Archie.Repo.preload(Timeline.list_notes(), :contact))}
   end
 
   @impl Phoenix.LiveView

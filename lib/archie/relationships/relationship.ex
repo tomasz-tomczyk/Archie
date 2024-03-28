@@ -3,6 +3,7 @@ defmodule Archie.Relationships.Relationship do
   A relationship between two contacts.
   """
   use Archie.Schema
+
   import ArchieWeb.Gettext
 
   @types ~w(spouse partner sibling child cousin parent friend)a

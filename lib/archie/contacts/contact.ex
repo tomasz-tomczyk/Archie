@@ -3,6 +3,7 @@ defmodule Archie.Contacts.Contact do
   A contact. The main model in the application.
   """
   use Archie.Schema
+
   alias Archie.Contacts.Email
   alias Archie.Contacts.PhoneNumber
   alias Archie.Relationships.Relationship
@@ -57,7 +58,8 @@ defmodule Archie.Contacts.Contact do
   defp find_empty_nested(nil), do: []
 
   defp find_empty_nested(map) do
-    Enum.map(map, fn {key, value} ->
+    map
+    |> Enum.map(fn {key, value} ->
       case value do
         %{"value" => nil} -> key
         %{"value" => ""} -> key

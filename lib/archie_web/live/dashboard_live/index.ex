@@ -1,4 +1,5 @@
 defmodule ArchieWeb.DashboardLive.Index do
+  @moduledoc false
   use ArchieWeb, :live_view
 
   @impl Phoenix.LiveView
